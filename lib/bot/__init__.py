@@ -20,6 +20,7 @@ from ..db import db
 PREFIX = "3"
 OWNER_IDS = [544573811899629568]
 COGS = [path.split("\\")[-1][:-3] for path in glob("./lib/cogs/*.py")]
+IGNORE_EXCEPTIONS = (CommandNotFound, BadArgument)
 
 class Ready(object):
     def __init__(self):
@@ -71,7 +72,6 @@ class Bot(BotBase):
     async def process_commands(self, message):
         ctx = await self.get_context(message, cls=Context)
 
-        
         if self.ready:
             if ctx.command is not None and ctx.guild is not None:
                 await self.invoke(ctx)
@@ -99,10 +99,17 @@ class Bot(BotBase):
         
 
     async def on_command_error(self, ctx, exc):
-        if isinstance(exc, CommandNotFound):
-            await ctx.send("Wrong command, try again!")
-        elif hasattr(exc, "original"):
-            raise exc.original
+        if any([isinstance(exc, error) for error in IGNORE_EXCEPTIONS]):
+            pass
+
+        elif isinstance(exc, MissingRequiredArgument):
+            await ctx.send("One or more required arguments are missing.")
+
+        elif isinstance(exc.original, HTTPException):
+            await ctx.send("Unable to send message.")
+
+        elif isinstance(exc.original, Forbidden):
+            await ctx.send("I am not allowed to do that.")
 
         else:
             raise exc
@@ -116,20 +123,20 @@ class Bot(BotBase):
 
             await self.stdout.send("Online!")
 
-            #user = self.get_user(431116940568952842)
-            #await user.send('Ak vidis tuto spravu napis mi')
+            # user = self.get_user(431116940568952842)
+            # await user.send('Ak vidis tuto spravu napis mi')
             
-            #embed = Embed(title="I m online!", description="This is a test for embeds!", color=0xFF0000, timestamp=datetime.utcnow())
-            #fields = [("Name", "Value", True),
-                     #("Another field", "2nd field", True),
-                     #("A non-inline field", "whatever is this", False)]
-            #for name, value, inline in fields:
-                #embed.add_field(name=name, value=value, inline=inline)
-            #embed.set_author(name="𝓖𝓪𝓶𝓲𝓷𝓰 𝓵𝓪𝓲𝓻", icon_url=self.guild.icon_url)
-            #embed.set_footer(text="just a footer!")
-            #embed.set_thumbnail(url=self.guild.icon_url)
-            #embed.set_image(url=self.guild.icon_url)
-            #await channel.send(embed=embed)
+            # embed = Embed(title="I m online!", description="This is a test for embeds!", color=0xFF0000, timestamp=datetime.utcnow())
+            # fields = [("Name", "Value", True),
+            #          ("Another field", "2nd field", True),
+            #          ("A non-inline field", "whatever is this", False)]
+            # for name, value, inline in fields:
+            #     embed.add_field(name=name, value=value, inline=inline)
+            # embed.set_author(name="𝓖𝓪𝓶𝓲𝓷𝓰 𝓵𝓪𝓲𝓻", icon_url=self.guild.icon_url)
+            # embed.set_footer(text="just a footer!")
+            # embed.set_thumbnail(url=self.guild.icon_url)
+            # embed.set_image(url=self.guild.icon_url)
+            # await self.stdout.send(embed=embed)
 
             #channel = self.get_channel(694513486880964608)
             #await channel.send("VI VON ZULUL")
