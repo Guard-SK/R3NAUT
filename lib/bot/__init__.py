@@ -8,8 +8,7 @@ from discord import Embed, File, DMChannel
 from discord.errors import HTTPException, Forbidden
 from discord.ext.commands import Bot as BotBase
 from discord.ext.commands import Context
-from discord.ext.commands import (CommandNotFound, BadArgument, MissingRequiredArgument,
-								  CommandOnCooldown)
+from discord.ext.commands import (CommandNotFound, BadArgument, MissingRequiredArgument, CommandOnCooldown)
 from discord.ext.commands import when_mentioned_or, command, has_permissions
 
 
@@ -104,6 +103,9 @@ class Bot(BotBase):
 
         elif isinstance(exc, MissingRequiredArgument):
             await ctx.send("One or more required arguments are missing.")
+
+        elif isinstance(exc, CommandOnCooldown):
+            await ctx.send(f"Cool down man <a:melting_ice:826761004980764702>. Try again in {exc.retry_after:,.2f} secs.")
 
         elif isinstance(exc.original, HTTPException):
             await ctx.send("Unable to send message.")

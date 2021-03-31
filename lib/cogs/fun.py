@@ -23,6 +23,7 @@ class Fun(Cog):
 
 
     @command(name="dice", aliases=["roll"])
+    @cooldown(1, 30, BucketType.user)
     async def roll_dice(self, ctx, die_string: str):
         dice, value = (int(term) for term in die_string.split("d"))
 
@@ -34,10 +35,10 @@ class Fun(Cog):
         else: 
             await ctx.send("Too many dice rolled. Please try lower number.")
 
-    @roll_dice.error
-    async def roll_dice_error(self, ctx, exc):
-        if isinstance(exc.original, HTTPException):
-            await ctx.send("Too many dice rolled. Please try lower number.")
+    #@roll_dice.error
+    #async def roll_dice_error(self, ctx, exc):
+        #if isinstance(exc.original, HTTPException):
+            #await ctx.send("Too many dice rolled. Please try lower number.")
 
     @command(name="slap", aliases=["hit"])
     async def slap_member(self, ctx, member: Member, *, reason: Optional[str] = "no reason"):
@@ -53,10 +54,47 @@ class Fun(Cog):
         await ctx.message.delete()
         await ctx.send(message)
 
+    @command(name="fact")
+    async def animal_fact(self, ctx, animal:str):
+        if (animal := animal.lower()) in ("dog", "cat", "panda", "fox", "bird", "koala"):
+
+            fact_url = f"https://some-random-api.ml/facts/{animal}"
+            image_url = f"https://some-random-api.ml/img/{'bird' if animal == 'bird' else animal}"
+
+            async with request("GET", image_url, headers={}) as response:
+                if response.status == 200:
+                    data = await response.json()
+                    image_link = data["link"]
+
+                else:
+                    image_link = None
+
+            async with request("GET", fact_url, headers={}) as response:
+                if response.status == 200:
+                    data = await response.json()
+
+                    embed = Embed(title=f"{animal.title()} fact",
+                                  description=data["fact"],
+                                  color=ctx.author.color)
+                    if image_link is not None:
+                        embed.set_image(url=image_link)
+                    await ctx.send(embed=embed)
+
+                else:
+                    await ctx.send(f"API returned a {response.status} status.")
+
+        else:
+            await ctx.send("No facts are available for that animal.")
+
+    @animal_fact.error
+    async def animal_fact_error(self, ctx, animal:str):
+        pass
+
     @Cog.listener()
     async def on_ready(self):
         if not self.bot.ready:
             self.bot.cogs_ready.ready_up("fun")
+        
 
 def setup(bot):
     bot.add_cog(Fun(bot))
