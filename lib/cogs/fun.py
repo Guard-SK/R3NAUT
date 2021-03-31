@@ -16,10 +16,6 @@ class Fun(Cog):
     async def say_hello(self, ctx):
         await ctx.send(f"{choice(('Hello', 'Hi', 'Hey', 'Hiya', 'Sup', 'Ciao', '<:peepohey:806962515152994406>'))} {ctx.author.mention}!")
 
-    @command(name="hail", aliases=["heil"])
-    async def hail(self, ctx):
-        await ctx.send(f"<:Jebaited:821339691760222208>fuq you I wont do that<:pepeLaught:812263170911240214>. Your mum gay <a:yourmom:808076848188751874> {ctx.author.mention}.")
-
     #@command(name="ahoj", aliases=["čau", "cav", "cau"])
     #async def povedz_ahoj(self, ctx):
         #await ctx.send(f"{choice(('<:peepohey:806962515152994406>', 'Ahoj', 'Čau', 'Hej', 'Cav', 'Sup', 'Ciao'))} {ctx.author.mention}!") #'My name is Jeff', 'Hello, my name is R3NAUT, and Im developed by Guard_SK', 'Hello, my name is R3NAUT', 'Whats going on?', 'I wasnt ready for that..'     
@@ -39,10 +35,10 @@ class Fun(Cog):
         else: 
             await ctx.send("Too many dice rolled. Please try lower number.")
 
-    #@roll_dice.error
-    #async def roll_dice_error(self, ctx, exc):
-        #if isinstance(exc.original, HTTPException):
-            #await ctx.send("Too many dice rolled. Please try lower number.")
+    @roll_dice.error
+    async def roll_dice_error(self, ctx, exc):
+        if isinstance(exc.original, HTTPException):
+            await ctx.send("Too many dice rolled. Please try lower number.")
 
     @command(name="slap", aliases=["hit"])
     @cooldown(1, 5, BucketType.user)
@@ -96,6 +92,10 @@ class Fun(Cog):
     @animal_fact.error
     async def animal_fact_error(self, ctx, animal:str):
         pass
+
+    @command(name="hail", aliases=["heil"])
+    async def hail(self, ctx):
+        await ctx.send(f"<:Jebaited:821339691760222208>fuq you I wont do that<:pepeLaught:812263170911240214>. Your mum gay <a:yourmom:808076848188751874> {ctx.author.mention}.")
 
     @Cog.listener()
     async def on_ready(self):
