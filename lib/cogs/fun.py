@@ -16,14 +16,18 @@ class Fun(Cog):
     async def say_hello(self, ctx):
         await ctx.send(f"{choice(('Hello', 'Hi', 'Hey', 'Hiya', 'Sup', 'Ciao', '<:peepohey:806962515152994406>'))} {ctx.author.mention}!")
 
-    @command(name="ahoj", aliases=["čau", "cav", "cau"])
-    async def povedz_ahoj(self, ctx):
-        await ctx.send(f"{choice(('<:peepohey:806962515152994406>', 'Ahoj', 'Čau', 'Hej', 'Cav', 'Sup', 'Ciao'))} {ctx.author.mention}!") #'My name is Jeff', 'Hello, my name is R3NAUT, and Im developed by Guard_SK', 'Hello, my name is R3NAUT', 'Whats going on?', 'I wasnt ready for that..'     
+    @command(name="hail", aliases=["heil"])
+    async def hail(self, ctx):
+        await ctx.send(f"<:Jebaited:821339691760222208>fuq you I wont do that<:pepeLaught:812263170911240214>. Your mum gay <a:yourmom:808076848188751874> {ctx.author.mention}.")
 
+    #@command(name="ahoj", aliases=["čau", "cav", "cau"])
+    #async def povedz_ahoj(self, ctx):
+        #await ctx.send(f"{choice(('<:peepohey:806962515152994406>', 'Ahoj', 'Čau', 'Hej', 'Cav', 'Sup', 'Ciao'))} {ctx.author.mention}!") #'My name is Jeff', 'Hello, my name is R3NAUT, and Im developed by Guard_SK', 'Hello, my name is R3NAUT', 'Whats going on?', 'I wasnt ready for that..'     
 
+     
 
     @command(name="dice", aliases=["roll"])
-    @cooldown(1, 30, BucketType.user)
+    @cooldown(1, 10, BucketType.user)
     async def roll_dice(self, ctx, die_string: str):
         dice, value = (int(term) for term in die_string.split("d"))
 
@@ -41,6 +45,7 @@ class Fun(Cog):
             #await ctx.send("Too many dice rolled. Please try lower number.")
 
     @command(name="slap", aliases=["hit"])
+    @cooldown(1, 5, BucketType.user)
     async def slap_member(self, ctx, member: Member, *, reason: Optional[str] = "no reason"):
         await ctx.send(f"{ctx.author.display_name} slapped {member.mention} for {reason}")
 
@@ -50,11 +55,13 @@ class Fun(Cog):
             await ctx.send("Can't find the memeber you mentioned.")
 
     @command(name="say", aliases=["echo"])
+    @cooldown(1, 5, BucketType.user)
     async def echo_message(self, ctx, *, message):
         await ctx.message.delete()
         await ctx.send(message)
 
     @command(name="fact")
+    @cooldown(1, 10, BucketType.user)
     async def animal_fact(self, ctx, animal:str):
         if (animal := animal.lower()) in ("dog", "cat", "panda", "fox", "bird", "koala"):
 

@@ -105,7 +105,7 @@ class Bot(BotBase):
             await ctx.send("One or more required arguments are missing.")
 
         elif isinstance(exc, CommandOnCooldown):
-            await ctx.send(f"Cool down man <a:melting_ice:826761004980764702>. Try again in {exc.retry_after:,.2f} secs.")
+            await ctx.send(f"<a:no_entry:826849755916140574>Cool down man <a:melting_ice:826761004980764702>. Try again in {exc.retry_after:,.2f} secs.<a:no_entry:826849755916140574>")
 
         elif isinstance(exc.original, HTTPException):
             await ctx.send("Unable to send message.")
