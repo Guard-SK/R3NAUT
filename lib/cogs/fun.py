@@ -97,6 +97,10 @@ class Fun(Cog):
     async def hail(self, ctx):
         await ctx.send(f"<:Jebaited:821339691760222208>fuq you I wont do that<:pepeLaught:812263170911240214>. Your mum gay <a:yourmom:808076848188751874> {ctx.author.mention}.")
 
+    @command(name="nudes", aliases=["horny"])
+    async def nudes(self, ctx):
+        await ctx.send(f"<:Jebaited:821339691760222208>fuq you I wont do that<:pepeLaught:812263170911240214>. Your mum gay <a:yourmom:808076848188751874> {ctx.author.mention}.")
+
     @Cog.listener()
     async def on_ready(self):
         if not self.bot.ready:
