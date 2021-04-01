@@ -30,8 +30,8 @@ class HelpMenu(ListPageSource):
         len_data = len(self.entries)
 
         embed = Embed(title="Help",
-                      description="Welcome to the R3NAUT help dialog!",)
-                      #colour=self.ctx.guild.me.avatar_url
+                      description="Welcome to the R3NAUT help dialog!",
+                      colour=self.ctx.guild.me.avatar_url)
         embed.set_thumbnail(url=self.ctx.guild.me.avatar_url)
         embed.set_footer(text=f"{offset:,} - {min(len_data, offset+self.per_page-1):,} of {len_data:,} commands.")
 
@@ -44,7 +44,7 @@ class HelpMenu(ListPageSource):
         fields = []
 
         for entry in enteries:
-            fields.append((entry.brief or "No description", syntax(entry)))
+            fields.append((entry.brief or "Command", syntax(entry)))
 
         return await self.write_page(menu, fields)
 
