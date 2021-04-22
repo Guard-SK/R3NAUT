@@ -3,6 +3,7 @@ from random import choice, randint
 from typing import Optional
 from discord.errors import HTTPException
 from aiohttp import request
+from discord.ext import commands, tasks
 from discord import Member, Embed
 from discord.ext.commands import Cog, BucketType
 from discord.ext.commands import BadArgument
@@ -99,7 +100,7 @@ class Fun(Cog):
 
     @command(name="nudes", aliases=["horny"])
     async def nudes(self, ctx):
-        await ctx.send(f"<:Jebaited:821339691760222208>fuq you I wont do that<:pepeLaught:812263170911240214>. Your mum gay <a:yourmom:808076848188751874> {ctx.author.mention}.")
+        await ctx.send(f"<:Jebaited:821339691760222208>fuq you I wont do that<:pepeLaught:812263170911240214>. Go to horny jail <a:yourmom:808076848188751874> {ctx.author.mention}.")
 
     @Cog.listener()
     async def on_ready(self):

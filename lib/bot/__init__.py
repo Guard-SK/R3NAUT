@@ -1,25 +1,62 @@
 from asyncio import sleep
 from datetime import datetime
 from glob import glob
+from random import choice, randint
 
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.cron import CronTrigger
 from discord import Embed, File, DMChannel
 from discord.errors import HTTPException, Forbidden
+from discord.ext import commands, tasks
 from discord.ext.commands import Bot as BotBase
 from discord.ext.commands import Context
 from discord.ext.commands import (CommandNotFound, BadArgument, MissingRequiredArgument, CommandOnCooldown)
 from discord.ext.commands import when_mentioned_or, command, has_permissions
 
-
 from discord import Intents
 
 from ..db import db
 
-PREFIX = "3"
 OWNER_IDS = [544573811899629568]
 COGS = [path.split("\\")[-1][:-3] for path in glob("./lib/cogs/*.py")]
 IGNORE_EXCEPTIONS = (CommandNotFound, BadArgument)
+
+def get_prefix(bot, message):
+	prefix = db.field("SELECT Prefix FROM guilds WHERE GuildID = ?", message.guild.id)
+	return when_mentioned_or(prefix)(bot, message)
+
+
+
+target_channel_id = 694513486880964608
+
+@tasks.loop(hours=2)
+async def called_every_hour():
+    message_channel = bot.get_channel(694513486880964608)
+    print(f"Got channel {message_channel} for teatime")
+    await message_channel.send(f"{choice(('<:pepeLaught:812263170911240214><a:TeaTime:806197564302819359>', '<a:yourmom:808076848188751874><:OMEGALUL:797814371609739275>', '<:pepeLaught:812263170911240214><a:TeaTime:806197564302819359>   <:pepeLaught:812263170911240214><a:TeaTime:806197564302819359>   <:pepeLaught:812263170911240214><a:TeaTime:806197564302819359>'))}")
+
+@called_every_hour.before_loop
+async def before():
+    await bot.wait_until_ready()
+    print("Finished waiting")
+
+called_every_hour.start()
+
+target_channel_id = 778562691810852884 #818107256213471242
+
+@tasks.loop(hours=2)
+async def called_every_hour():
+    message_channel = bot.get_channel(778562691810852884)
+    print(f"Got channel {message_channel} for teatime")
+    await message_channel.send(f"{choice(('<:pepeLaught:812263170911240214><a:TeaTime:806197564302819359>', '<a:yourmom:808076848188751874><:OMEGALUL:797814371609739275>', '<:pepeLaught:812263170911240214><a:TeaTime:806197564302819359>   <:pepeLaught:812263170911240214><a:TeaTime:806197564302819359>   <:pepeLaught:812263170911240214><a:TeaTime:806197564302819359>'))}")
+
+@called_every_hour.before_loop
+async def before():
+    await bot.wait_until_ready()
+    print("Finished waiting")
+
+called_every_hour.start()
+
 
 class Ready(object):
     def __init__(self):
@@ -35,26 +72,27 @@ class Ready(object):
 
 class Bot(BotBase):
     def __init__(self):
-        self.PREFIX = PREFIX
         self.ready = False
         self.cogs_ready = Ready()
         self.guild = None
         self.scheduler = AsyncIOScheduler()
 
-        intents = Intents.default()
-        intents.members = True
 
         db.autosave(self.scheduler)
         super().__init__(
-            command_prefix=PREFIX, 
-            owner_ids=OWNER_IDS
-            #intents=Intents.all(), #doesnt work
+            command_prefix=get_prefix, 
+            owner_ids=OWNER_IDS,
+            intents=Intents.all(),
         )
 
     def setup(self):
         for cog in COGS:
             self.load_extension(f"lib.cogs.{cog}")
             print(f"{cog} cog loaded")
+
+    def update_db(self):
+        db.multiexec("INSERT OR IGNORE INTO guilds (GuildID) VALUES (?)", 
+                    ((guild.id,) for guild in self.guilds))
 
     def run(self, version):
         self.VERSION = version
@@ -83,6 +121,7 @@ class Bot(BotBase):
         await channel.send("Saving database...")
 
     async def on_connect(self):
+        self.update_db()
         print("R3NAUT connected")
 
     async def on_dissconnect(self):
@@ -92,8 +131,7 @@ class Bot(BotBase):
         if err == "on_command_error":
             await args[0].send("Something went wrong.")
 
-        else:
-            await self.stdout.send("An error occured!")
+            await self.stdout.send("An error occured.")
         raise
         
 
@@ -116,12 +154,16 @@ class Bot(BotBase):
         else:
             raise exc
 
+    send_time='09:30'
+    message_channel_id='818107256213471242'
+
     async def on_ready(self):
         if not self.ready:
             self.guild = self.get_guild(647170092467224646)
             self.stdout = self.get_channel(818107256213471242)
             self.scheduler.add_job(self.print_message, CronTrigger(second=0))
             self.scheduler.start()
+
 
             await self.stdout.send("Online!")
 
@@ -143,6 +185,9 @@ class Bot(BotBase):
             #channel = self.get_channel(694513486880964608)
             #await channel.send("VI VON ZULUL")
 
+            
+
+
             while not self.cogs_ready.all_ready():
                 await sleep(0.5)
 
@@ -151,7 +196,6 @@ class Bot(BotBase):
 
         else: 
             print("R3NAULT reconnected")
-
 
     async def on_message(self, message):
         if not message.author.bot:
