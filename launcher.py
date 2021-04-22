@@ -1,5 +1,5 @@
 from lib.bot import bot
 
-VERSION = "0.1.5." 
+#VERSION = "0.1.5." 
 
-bot.run(VERSION)
+bot.run(os.enviroment['TOKEN.0'])
