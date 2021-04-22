@@ -1,4 +1,5 @@
 from lib.bot import bot
+import os
 
 #VERSION = "0.1.5." 
 
