@@ -1,3 +1,4 @@
 discord
 mysql-connector
 apscheduler
+cogs
