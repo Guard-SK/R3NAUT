@@ -27,35 +27,35 @@ def get_prefix(bot, message):
 
 
 
-target_channel_id = 694513486880964608
+# target_channel_id = 694513486880964608
 
-@tasks.loop(hours=2)
-async def called_every_hour():
-    message_channel = bot.get_channel(694513486880964608)
-    print(f"Got channel {message_channel} for teatime")
-    await message_channel.send(f"{choice(('<:pepeLaught:812263170911240214><a:TeaTime:806197564302819359>', '<a:yourmom:808076848188751874><:OMEGALUL:797814371609739275>', '<:pepeLaught:812263170911240214><a:TeaTime:806197564302819359>   <:pepeLaught:812263170911240214><a:TeaTime:806197564302819359>   <:pepeLaught:812263170911240214><a:TeaTime:806197564302819359>'))}")
+# @tasks.loop(hours=2)
+# async def called_every_hour():
+#     message_channel = bot.get_channel(694513486880964608)
+#     print(f"Got channel {message_channel} for teatime") 
+#     await message_channel.send(f"{choice(('<:pepeLaught:812263170911240214><a:TeaTime:806197564302819359>', '<a:yourmom:808076848188751874><:OMEGALUL:797814371609739275>', '<:pepeLaught:812263170911240214><a:TeaTime:806197564302819359>   <:pepeLaught:812263170911240214><a:TeaTime:806197564302819359>   <:pepeLaught:812263170911240214><a:TeaTime:806197564302819359>', '<a:hackerCD:835166860239568947>'))}")
 
-@called_every_hour.before_loop
-async def before():
-    await bot.wait_until_ready()
-    print("Finished waiting")
+# @called_every_hour.before_loop
+# async def before():
+#     await bot.wait_until_ready()
+#     print("Finished waiting")
 
-called_every_hour.start()
+# called_every_hour.start()
 
-target_channel_id = 778562691810852884 #818107256213471242
+# target_channel_id = 778562691810852884 #818107256213471242
 
-@tasks.loop(hours=2)
-async def called_every_hour():
-    message_channel = bot.get_channel(778562691810852884)
-    print(f"Got channel {message_channel} for teatime")
-    await message_channel.send(f"{choice(('<:pepeLaught:812263170911240214><a:TeaTime:806197564302819359>', '<a:yourmom:808076848188751874><:OMEGALUL:797814371609739275>', '<:pepeLaught:812263170911240214><a:TeaTime:806197564302819359>   <:pepeLaught:812263170911240214><a:TeaTime:806197564302819359>   <:pepeLaught:812263170911240214><a:TeaTime:806197564302819359>'))}")
+# @tasks.loop(hours=2)
+# async def called_every_hour():
+#     message_channel = bot.get_channel(778562691810852884)
+#     print(f"Got channel {message_channel} for teatime")
+#     await message_channel.send(f"{choice(('<:pepeLaught:812263170911240214><a:TeaTime:806197564302819359>', '<a:yourmom:808076848188751874><:OMEGALUL:797814371609739275>', '<:pepeLaught:812263170911240214><a:TeaTime:806197564302819359>   <:pepeLaught:812263170911240214><a:TeaTime:806197564302819359>   <:pepeLaught:812263170911240214><a:TeaTime:806197564302819359>'))}")
 
-@called_every_hour.before_loop
-async def before():
-    await bot.wait_until_ready()
-    print("Finished waiting")
+# @called_every_hour.before_loop
+# async def before():
+#     await bot.wait_until_ready()
+#     print("Finished waiting")
 
-called_every_hour.start()
+# called_every_hour.start()
 
 
 class Ready(object):
@@ -166,9 +166,6 @@ class Bot(BotBase):
 
 
             await self.stdout.send("Online!")
-
-            # user = self.get_user(431116940568952842)
-            # await user.send('Ak vidis tuto spravu napis mi')
             
             # embed = Embed(title="I m online!", description="This is a test for embeds!", color=0xFF0000, timestamp=datetime.utcnow())
             # fields = [("Name", "Value", True),
@@ -181,9 +178,6 @@ class Bot(BotBase):
             # embed.set_thumbnail(url=self.guild.icon_url)
             # embed.set_image(url=self.guild.icon_url)
             # await self.stdout.send(embed=embed)
-
-            #channel = self.get_channel(694513486880964608)
-            #await channel.send("VI VON ZULUL")
 
             
 
