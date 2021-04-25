@@ -1,3 +1,3 @@
 # R3NAUT
 Discord moderation bot under development. 
-Not for buisness
+Don't copy any code, not copyright free
