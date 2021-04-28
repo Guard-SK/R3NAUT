@@ -6,7 +6,7 @@ async-timeout==3.0.1
 attrs==20.3.0
 chardet==4.0.0
 colorama==0.4.4
-discord-ext-menus==1.0.0
+discord-ext-menus==1.0.0a29+g4429b56
 discord.py==1.6.0
 idna==3.1
 isort==5.7.0
@@ -21,4 +21,3 @@ typing-extensions==3.7.4.3
 tzlocal==2.1
 wrapt==1.12.1
 yarl==1.6.3
-mysql-connector

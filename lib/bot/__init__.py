@@ -18,7 +18,7 @@ from discord import Intents
 from ..db import db
 
 OWNER_IDS = [544573811899629568]
-COGS = [path.split("\\")[-1][:-3] for path in glob("./lib/cogs/*.py")]
+COGS = [path.split("/")[-1][:-3] for path in glob("./lib/cogs/*.py")] #fix the path every time. \\ for windows, / for linux (hostsapling.net)
 IGNORE_EXCEPTIONS = (CommandNotFound, BadArgument)
 
 def get_prefix(bot, message):
@@ -56,7 +56,6 @@ def get_prefix(bot, message):
 #     print("Finished waiting")
 
 # called_every_hour.start()
-
 
 class Ready(object):
     def __init__(self):
