@@ -2,6 +2,8 @@ from os.path import isfile
 from sqlite3 import connect
 
 from apscheduler.triggers.cron import CronTrigger
+from apscheduler.schedulers.background import BackgroundScheduler
+scheduler = BackgroundScheduler({'apscheduler.timezone': 'Europe/London'})
 
 DB_PATH = "./data/db/database.db"
 BUILD_PATH = "./data/db/build.sql"
