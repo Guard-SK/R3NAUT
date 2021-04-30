@@ -14,13 +14,10 @@ from discord.ext.commands import (CommandNotFound, BadArgument, MissingRequiredA
 from discord.ext.commands import when_mentioned_or, command, has_permissions
 from discord import Intents
 
-from apscheduler.schedulers.background import BackgroundScheduler
-scheduler = BackgroundScheduler({'apscheduler.timezone': 'Europe/London'})
-
 from ..db import db
 
 OWNER_IDS = [544573811899629568]
-COGS = [path.split("/")[-1][:-3] for path in glob("./lib/cogs/*.py")] #fix the path every time. \\ for windows, / for linux (hostsapling.net)
+COGS = [path.split("\\")[-1][:-3] for path in glob("./lib/cogs/*.py")] #fix the path every time. \\ for windows, / for linux (hostsapling.net)
 IGNORE_EXCEPTIONS = (CommandNotFound, BadArgument)
 
 def get_prefix(bot, message):
@@ -162,7 +159,7 @@ class Bot(BotBase):
         if not self.ready:
             self.guild = self.get_guild(647170092467224646)
             self.stdout = self.get_channel(818107256213471242)
-            self.scheduler.add_job(self.print_message, CronTrigger(second=0))
+            self.scheduler.add_job(self.print_message, CronTrigger(second=0, timezone="Europe/Bratislava"))
             self.scheduler.start()
 
 

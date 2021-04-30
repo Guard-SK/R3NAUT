@@ -32,7 +32,7 @@ def commit():
 
 
 def autosave(sched):
-	sched.add_job(commit, CronTrigger(second=0))
+	sched.add_job(commit, CronTrigger(second=0, timezone="Europe/Bratislava"))
 
 
 def close():
