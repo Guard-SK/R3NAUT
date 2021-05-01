@@ -73,7 +73,7 @@ class Bot(BotBase):
         self.ready = False
         self.cogs_ready = Ready()
         self.guild = None
-        self.scheduler = AsyncIOScheduler()
+        self.scheduler = AsyncIOScheduler(timezone='Europe/Bratislava')
 
 
         db.autosave(self.scheduler)
@@ -159,7 +159,7 @@ class Bot(BotBase):
         if not self.ready:
             self.guild = self.get_guild(647170092467224646)
             self.stdout = self.get_channel(818107256213471242)
-            self.scheduler.add_job(self.print_message, CronTrigger(second=0, timezone="Europe/Bratislava"))
+            self.scheduler.add_job(self.print_message, CronTrigger(second=0, timezone='Europe/Bratislava'))
             self.scheduler.start()
 
 
@@ -184,10 +184,10 @@ class Bot(BotBase):
                 await sleep(0.5)
 
             self.ready = True
-            print("R3NAULT ready")
+            print("R3NAUT ready")
 
         else: 
-            print("R3NAULT reconnected")
+            print("R3NAUT reconnected")
 
     async def on_message(self, message):
         if not message.author.bot:
