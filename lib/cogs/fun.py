@@ -9,6 +9,8 @@ from discord.ext.commands import Cog, BucketType
 from discord.ext.commands import BadArgument
 from discord.ext.commands import command, cooldown
 
+import discord
+
 class Fun(Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -20,8 +22,6 @@ class Fun(Cog):
     #@command(name="ahoj", aliases=["čau", "cav", "cau"])
     #async def povedz_ahoj(self, ctx):
         #await ctx.send(f"{choice(('<:peepohey:806962515152994406>', 'Ahoj', 'Čau', 'Hej', 'Cav', 'Sup', 'Ciao'))} {ctx.author.mention}!") #'My name is Jeff', 'Hello, my name is R3NAUT, and Im developed by Guard_SK', 'Hello, my name is R3NAUT', 'Whats going on?', 'I wasnt ready for that..'     
-
-     
 
     @command(name="dice", aliases=["roll"])
     @cooldown(1, 10, BucketType.user)
@@ -101,6 +101,11 @@ class Fun(Cog):
     @command(name="nudes", aliases=["horny"])
     async def nudes(self, ctx):
         await ctx.send(f"<:Jebaited:821339691760222208>fuq you I wont do that<:pepeLaught:812263170911240214>. Go to horny jail <a:yourmom:808076848188751874> {ctx.author.mention}.")
+
+    @command(name="dm", aliases=["direct message", "send"])
+    async def send_dm(self, ctx, member: discord.Member, *, content):
+        channel = await member.create_dm()
+        await channel.send(content)
 
     @Cog.listener()
     async def on_ready(self):

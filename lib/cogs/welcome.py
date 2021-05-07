@@ -21,14 +21,14 @@ class Welcome(Cog):
         db.execute("INSERT INTO exp (UserID) VALUES (?)", member.id)
         embed = discord.Embed(title=f"Welcome to **{member.guild.name}** <:pepeLaught:812263170911240214><a:TeaTime:806197564302819359>", description=f"{member.mention}", color=0xff0000, timestamp=datetime.utcnow()) 
         embed.set_author(name="R3NAUT", url="https://cdn.discordapp.com/attachments/835185429497380965/835187630576107550/Dizajn_bez_nazvu_3.png", icon_url="https://cdn.discordapp.com/attachments/835185429497380965/835187630576107550/Dizajn_bez_nazvu_3.png")
-        embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/835170005200011345/835187033936363601/Black_and_Red_Gaming_Logo.gif")
+        embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/629382706299666432/838794535882588190/ezgif.com-gif-maker_2.gif")
         embed.add_field(name="Rules", value="don't forget to go to <#647170266568327179>, read the rules and **click on the reaction!**", inline=True)
         embed.add_field(name="Come", value="and head over to <#694513486880964608> to say hi!", inline=True)
         embed.set_footer(text=" ")
         await self.bot.get_channel(688497338347552774).send(embed=embed)
 
         try:
-            embed=discord.Embed(title=f"Welcome {member.mention} to **{member.guild.name}** <:peepohey:806962515152994406>", description=f"We are glad you came!", color=0x66a136)
+            embed=discord.Embed(title=f"Welcome {member.mention} to **{member.guild.name}** <:peepohey:806962515152994406>", description=f"We are glad you came!", color=0x66a136, timestamp=datetime.utcnow())
 
             #await member.send(f"Welcome to **{member.guild.name}**! We are glad you came!")
 

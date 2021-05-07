@@ -35,7 +35,7 @@ class Info(Cog):
 					  colour=ctx.guild.owner.colour,
 					  timestamp=datetime.utcnow())
 
-        embed.set_thumbnail(url=ctx.guild.icon_url)
+        embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/835170005200011345/835187033936363601/Black_and_Red_Gaming_Logo.gif")
 
         statuses = [len(list(filter(lambda m: str(m.status) == "online", ctx.guild.members))),
 					len(list(filter(lambda m: str(m.status) == "idle", ctx.guild.members))),
