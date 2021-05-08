@@ -26,8 +26,8 @@ class Log(Cog):
 
 
         if before.avatar_url != after.avatar_url:
-            embed = Embed(title="Member update!",
-						  description="Avatar change. New image is below, old to the right.",
+            embed = Embed(title=f"Member update!",
+						  description=f"{after.mention} changed avatar. New image is below, old to the right.",
 						  colour=0xffc800,
 						  timestamp=datetime.utcnow())
 
