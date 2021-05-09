@@ -1,7 +1,7 @@
 from asyncio import sleep
 from datetime import datetime
-from glob import glob
 from random import choice, randint
+import os
 
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.cron import CronTrigger
@@ -17,7 +17,7 @@ from discord import Intents
 from ..db import db
 
 OWNER_IDS = [544573811899629568]
-COGS = [path.split("\\")[-1][:-3] for path in glob("./lib/cogs/*.py")] #fix the path every time. \\ for windows, / for linux (hostsapling.net)
+COGS = [path[:-3] for path in os.listdir('./lib/cogs') if path[-3:] == '.py']
 IGNORE_EXCEPTIONS = (CommandNotFound, BadArgument)
 
 def get_prefix(bot, message):
