@@ -2,6 +2,7 @@ from discord import Member
 from discord.ext.commands import Cog, Greedy
 from discord.ext.commands import CheckFailure
 from discord.ext.commands import command, has_permissions
+from time import time
 
 from ..db import db
 
@@ -47,7 +48,7 @@ class Misc(Cog):
 
 	@command(name="ping")
 	async def ping(self, ctx):
-		await ctx.send('Pong! {0}'.format(round(self.bot.latency, 100000)))
+		await ctx.send(f"Pong! Latency is: {self.bot.latency*1000:,.0f} ms.")
 
 	@Cog.listener()
 	async def on_ready(self):

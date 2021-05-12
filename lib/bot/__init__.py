@@ -162,8 +162,7 @@ class Bot(BotBase):
             self.scheduler.add_job(self.print_message, CronTrigger(second=0, timezone='Europe/Bratislava'))
             self.scheduler.start()
 
-
-            await self.stdout.send("Online!")
+            self.update_db()
             
             # embed = Embed(title="I m online!", description="This is a test for embeds!", color=0xFF0000, timestamp=datetime.utcnow())
             # fields = [("Name", "Value", True),
@@ -177,12 +176,10 @@ class Bot(BotBase):
             # embed.set_image(url=self.guild.icon_url)
             # await self.stdout.send(embed=embed)
 
-            
-
-
             while not self.cogs_ready.all_ready():
                 await sleep(0.5)
 
+            await self.stdout.send("Online!")
             self.ready = True
             print("R3NAUT ready")
 

@@ -43,10 +43,10 @@ class Welcome(Cog):
     @Cog.listener()
     async def on_member_remove(self, member):
         db.execute("DELETE FROM exp WHERE UserID = ?", member.id)
-        embed=discord.Embed(title="Bye", description=f"{member.mention} has left {member.guild.name} <:sadge:806195778565570580>", color=0xff0000, timestamp=datetime.utcnow)
+        embed=discord.Embed(title="Bye", description=f"{member.mention} has left {member.guild.name} <:sadge:806195778565570580>", color=0xff0000, timestamp=datetime.utcnow())
         embed.set_author(name="R3NAUT", icon_url="https://cdn.discordapp.com/attachments/835185429497380965/835187630576107550/Dizajn_bez_nazvu_3.png")
-        embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/835170005200011345/835187033936363601/Black_and_Red_Gaming_Logo.gif")
-        await self.bot.get_channel(688497338347552774).send(embed=embed)
+        embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/626418163042746380/841302882984394772/ezgif.com-gif-maker_3.gif")
+        await self.bot.get_channel(688497338347552774).send(embed=embed) #688497338347552774
 
 def setup(bot):
     bot.add_cog(Welcome(bot))
