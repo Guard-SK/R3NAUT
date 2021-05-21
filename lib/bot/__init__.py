@@ -13,6 +13,7 @@ from discord.ext.commands import Context
 from discord.ext.commands import (CommandNotFound, BadArgument, MissingRequiredArgument, CommandOnCooldown)
 from discord.ext.commands import when_mentioned_or, command, has_permissions
 from discord import Intents
+import discord
 
 from ..db import db
 
@@ -161,6 +162,7 @@ class Bot(BotBase):
             self.stdout = self.get_channel(818107256213471242)
             self.scheduler.add_job(self.print_message, CronTrigger(second=0, timezone='Europe/Bratislava'))
             self.scheduler.start()
+            await bot.change_presence(activity=discord.Game(name="League of Developers|3help"))
 
             self.update_db()
             
