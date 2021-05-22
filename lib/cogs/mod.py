@@ -237,8 +237,8 @@ class Mod(Cog):
 
     @Cog.listener()
     async def on_message(self, message):
-        if not message.author.bot:
-            if not message.author.guild_permissions.manage_guild:
+        if message.author.bot:
+            if message.author.guild_permissions.manage_guild:
                 if profanity.contains_profanity(message.content):
                     await message.delete()
                     await message.channel.send("You can't use that word here!")
@@ -254,6 +254,7 @@ class Mod(Cog):
     async def on_ready(self):
         if not self.bot.ready:
             self.logs_channel = self.bot.get_channel(732624357762793502)
+            self.modmail_channel = self.bot.get_channel(839492062914412544)
             self.mute_role = self.bot.guild.get_role(688499497894281370)
 
             self.bot.cogs_ready.ready_up("mod")
