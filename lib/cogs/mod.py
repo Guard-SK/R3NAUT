@@ -129,20 +129,20 @@ class Mod(Cog):
                     end_time = datetime.utcnow() + timedelta(seconds=hours) if hours else None
 
                     db.execute("INSERT INTO mutes VALUES (?, ?, ?)",
-                               target.id, role_ids, getattr(end_time, "isoformat", lambda: None)())
+                            target.id, role_ids, getattr(end_time, "isoformat", lambda: None)())
 
                     await target.edit(roles=[self.mute_role])
 
                     embed = Embed(title="Member muted",
-                                  colour=0xDD2222,
-                                  timestamp=datetime.utcnow())
+                                colour=0xDD2222,
+                                timestamp=datetime.utcnow())
 
                     embed.set_thumbnail(url=target.avatar_url)
 
                     fields = [("Member", target.display_name, False),
-                              ("Actioned by", message.author.display_name, False),
-                              ("Duration", f"{hours:,} hour(s)" if hours else "Indefinite", False),
-                              ("Reason", reason, False)]
+                            ("Actioned by", message.author.display_name, False),
+                            ("Duration", f"{hours:,} hour(s)" if hours else "Indefinite", False),
+                            ("Reason", reason, False)]
 
                     for name, value, inline in fields:
                         embed.add_field(name=name, value=value, inline=inline)
