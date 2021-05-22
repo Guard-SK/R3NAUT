@@ -107,7 +107,9 @@ class Help(Cog):
 													  color=0xca1c1c, timestamp=datetime.utcnow())
 		embed.add_field(name="Commands", value=f"```addprofanity|addswears|addcurses <words>``` - add forbidden words. **Permissions: Admin and higher** \n ```delprofanity|delswears|delcurses <words>``` - delete forbidden words. **Permissions: Admin and higher** \n ```mute <member> <time in minutes(optional)>``` - deletes all roles from mentioned user and adds a mute role. If you typed time as well, bot will delete the roles and add the old once back. **Permissions: Moderator and higher** \n ```unmute <member>``` - deletes muted role and adds old roles back. **Permissions: Moderator and higher** \n ```clear|purge|nuke <number> <member(s)(optional)>``` - clears number of messages you typed. If you mentioned user, the bot will clear all messages within the number you typed that are written by user(s) you mentioned. **Permissions: Moderator and higher** \n ```kick <member>``` - kick user you mentioned. **Permission: Moderator and above** \n ```ban <member>``` - bans member you mentioned. **Permission: Staff and higher**")
 		embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/629382706299666432/845639956008534046/R3NAUT.png")
-		await ctx.send(embed=embed)
+		msg = await ctx.send(embed=embed)
+		await asyncio.sleep(60)
+		await msg.delete()
 		
 
 	@Cog.listener()
