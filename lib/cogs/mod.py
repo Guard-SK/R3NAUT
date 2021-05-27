@@ -1,7 +1,9 @@
+import re
 from typing import Optional
 from datetime import datetime
 from datetime import timedelta
 from asyncio import sleep
+from re import search
 
 from better_profanity import profanity
 import discord
@@ -18,6 +20,9 @@ profanity.load_censor_words_from_file("./data/profanity.txt")
 class Mod(Cog):
     def __init__(self, bot):
         self.bot = bot
+
+        self.url_regex = r"(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'\".,<>?«»“”‘’]))"
+        self.no_links = (817805249552187443, 688498139459879115, 736932762615021660, 736934235461517403, 737693038029307975, 707691743986057287)
             
     async def kick_members(self, ctx, targets, reason):
         if not len(targets):
@@ -237,17 +242,15 @@ class Mod(Cog):
 
     @Cog.listener()
     async def on_message(self, message):
-        if message.author.bot:
-            if message.author.guild_permissions.manage_guild:
+        if not message.author.bot:
+            if not message.author.guild_permissions.manage_guild:
                 if profanity.contains_profanity(message.content):
                     await message.delete()
-                    await message.channel.send("You can't use that word here!")
-                else:
-                    pass
-            else:
-                pass
-        else:
-            pass
+                    await message.channel.send("You can't use that word here!", delete_after=10)
+
+                elif message.channel.id not in self.links_allowed and search(self.url_regex, message.content):
+                    await message.delete()
+                    await message.channel.send("You can't send links in this channel.", delete_after=10)
 
 
     @Cog.listener()
