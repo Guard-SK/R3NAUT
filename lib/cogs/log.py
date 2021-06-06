@@ -93,9 +93,9 @@ class Log(Cog):
     async def on_message_delete(self, message):
         if not message.author.bot:
             embed = Embed(title="Message deletion",
-						  description=f"Deleted by {message.author.display_name} in {message.channel}.",
-						  colour=0xff6f00,
-						  timestamp=datetime.utcnow())
+                        description=f"Deleted by {message.author.display_name} in {message.channel}.",
+                        colour=0xff6f00,
+                        timestamp=datetime.utcnow())
 
             fields = [("Content", message.content, False)]
 

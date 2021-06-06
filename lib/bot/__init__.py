@@ -1,19 +1,18 @@
 from asyncio import sleep
 from datetime import datetime
-from random import choice, randint
 import os
 
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.cron import CronTrigger
-from discord import Embed, File, DMChannel
+from discord import Embed, DMChannel
 from discord.errors import HTTPException, Forbidden
-from discord.ext import commands, tasks
 from discord.ext.commands import Bot as BotBase
 from discord.ext.commands import Context
 from discord.ext.commands import (CommandNotFound, BadArgument, MissingRequiredArgument, CommandOnCooldown)
 from discord.ext.commands import when_mentioned_or, command, has_permissions
 from discord import Intents
 import discord
+from discord.ext.commands.errors import MissingPermissions
 
 from ..db import db
 
@@ -105,6 +104,22 @@ class Bot(BotBase):
         print("Running project R3NAUT...")
         super().run(self.TOKEN, reconnect=True)
 
+    async def load(ctx, extension):
+        if ctx.message.author.id == 544573811899629568:
+            bot.load_extension(f"cogs.{extension}")
+            await ctx.send("Cog(s) loaded.")
+
+        else:
+            await ctx.send(f"You are not the owner of the bot!!! GET OUT OF HERE!!! <:akaliNani:848283879826784286>")
+
+    async def unload(ctx, extension):
+        if ctx.message.author.id == 544573811899629568:
+            bot.unload_extension(f"cogs.{extension}")
+            await ctx.send("Cog(s) unloaded.")
+
+        else:
+            await ctx.send(f"You are not the owner of the bot!!! GET OUT OF HERE!!! <:akaliNani:848283879826784286>")
+
     async def process_commands(self, message):
         ctx = await self.get_context(message, cls=Context)
 
@@ -149,6 +164,9 @@ class Bot(BotBase):
 
         elif isinstance(exc.original, Forbidden):
             await ctx.send("I am not allowed to do that.")
+
+        elif isinstance(exc, MissingPermissions):
+            await ctx.send("You don't have permission to do that.")
 
         else:
             raise exc

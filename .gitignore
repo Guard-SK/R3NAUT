@@ -2,3 +2,4 @@
 *.db-jurnal
 __pycashe__
 lib/bot/token.0
+lib/cogs/template
