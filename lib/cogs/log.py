@@ -4,6 +4,8 @@ from discord.ext.commands import command
 from datetime import datetime
 import discord
 
+BotID = 817768019086016543
+
 class Log(Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -91,20 +93,25 @@ class Log(Cog):
 
     @Cog.listener()
     async def on_message_delete(self, message):
-        if not message.author.bot:
-            embed = Embed(title="Message deletion",
-                        description=f"Deleted by {message.author.display_name} in {message.channel}.",
-                        colour=0xff6f00,
-                        timestamp=datetime.utcnow())
+        if message.author.id == BotID:
+            if message.author.bot:
+                embed = Embed(title="Message deletion",
+                            description=f"Deleted by {message.author.display_name} in {message.channel}.",
+                            colour=0xff6f00,
+                            timestamp=datetime.utcnow())
 
-            fields = [("Content", message.content, False)]
+                fields = [("Content", message.content, False)]
 
-            embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/629382706299666432/837723544863244338/unnamed_3.png")
+                embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/629382706299666432/837723544863244338/unnamed_3.png")
 
-            for name, value, inline in fields:
-                embed.add_field(name=name, value=value, inline=inline)
+                for name, value, inline in fields:
+                    embed.add_field(name=name, value=value, inline=inline)
 
-            await self.logs_channel.send(embed=embed)
+                await self.logs_channel.send(embed=embed)
+            else:
+                pass
+        else:
+            pass
 
 def setup(bot):
     bot.add_cog(Log(bot))

@@ -1,16 +1,14 @@
-import re
 from typing import Optional
 from datetime import datetime
 from datetime import timedelta
 from asyncio import sleep
-from re import search
+
 
 from better_profanity import profanity
 import discord
 from discord.ext.commands import command
 from discord.ext.commands import Cog, Greedy
 from discord.ext.commands import has_permissions, bot_has_permissions, CheckFailure
-from discord import Forbidden
 from discord import Embed, Member
 
 from ..db import db

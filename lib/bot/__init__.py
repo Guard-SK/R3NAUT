@@ -10,6 +10,7 @@ from discord.ext.commands import Bot as BotBase
 from discord.ext.commands import Context
 from discord.ext.commands import (CommandNotFound, BadArgument, MissingRequiredArgument, CommandOnCooldown)
 from discord.ext.commands import when_mentioned_or, command, has_permissions
+from discord.ext import commands
 from discord import Intents
 import discord
 from discord.ext.commands.errors import MissingPermissions
@@ -19,6 +20,7 @@ from ..db import db
 OWNER_IDS = [544573811899629568]
 COGS = [path[:-3] for path in os.listdir('./lib/cogs') if path[-3:] == '.py']
 IGNORE_EXCEPTIONS = (CommandNotFound, BadArgument)
+
 
 def get_prefix(bot, message):
 	prefix = db.field("SELECT Prefix FROM guilds WHERE GuildID = ?", message.guild.id)
@@ -103,22 +105,6 @@ class Bot(BotBase):
 
         print("Running project R3NAUT...")
         super().run(self.TOKEN, reconnect=True)
-
-    async def load(ctx, extension):
-        if ctx.message.author.id == 544573811899629568:
-            bot.load_extension(f"cogs.{extension}")
-            await ctx.send("Cog(s) loaded.")
-
-        else:
-            await ctx.send(f"You are not the owner of the bot!!! GET OUT OF HERE!!! <:akaliNani:848283879826784286>")
-
-    async def unload(ctx, extension):
-        if ctx.message.author.id == 544573811899629568:
-            bot.unload_extension(f"cogs.{extension}")
-            await ctx.send("Cog(s) unloaded.")
-
-        else:
-            await ctx.send(f"You are not the owner of the bot!!! GET OUT OF HERE!!! <:akaliNani:848283879826784286>")
 
     async def process_commands(self, message):
         ctx = await self.get_context(message, cls=Context)
