@@ -164,9 +164,10 @@ class Bot(BotBase):
         if not self.ready:
             self.guild = self.get_guild(647170092467224646)
             self.stdout = self.get_channel(818107256213471242)
+            self.announcements = self.get_channel(717812987364376640)
             self.scheduler.add_job(self.print_message, CronTrigger(second=0, timezone='Europe/Bratislava'))
             self.scheduler.start()
-            await bot.change_presence(activity=discord.Game(name="League of Developers|3help"))
+            await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="https://github.com/Guard-SK/R3NAUT"))
 
             self.update_db()
             
