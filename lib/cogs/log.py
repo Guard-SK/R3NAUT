@@ -24,18 +24,20 @@ class Log(Cog):
             embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/629382706299666432/837700710539591740/6e35ef7687065eb1e4c037781f3c4cdc.png")
             embed.add_field(name="Before", value=f"{before.name}", inline=False)
             embed.add_field(name="After", value=f"{after.name}", inline=False)
+            await self.logs_channel.send(f"{after.mention}")
             await self.logs_channel.send(embed=embed)
 
 
         if before.avatar_url != after.avatar_url:
             embed = Embed(title=f"Member update!",
-						  description=f"{after.mention} changed avatar. New image is below, old to the right.",
+						  description=f"{after.name} changed avatar. New image is below, old to the right.",
 						  colour=0xffc800,
 						  timestamp=datetime.utcnow())
 
             embed.set_thumbnail(url=before.avatar_url)
             embed.set_image(url=after.avatar_url)
 
+            await self.logs_channel.send(f"{after.mention}")
             await self.logs_channel.send(embed=embed)
 
         if before.discriminator != after.discriminator:
@@ -44,6 +46,7 @@ class Log(Cog):
             embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/629382706299666432/837700710539591740/6e35ef7687065eb1e4c037781f3c4cdc.png")
             embed.add_field(name="Before", value=f"{before.discriminator}", inline=False)
             embed.add_field(name="After", value=f"{after.discriminator}", inline=False)
+            await self.logs_channel.send(f"{after.mention}")
             await self.logs_channel.send(embed=embed)
 
 
@@ -55,6 +58,7 @@ class Log(Cog):
             embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/629382706299666432/837700710539591740/6e35ef7687065eb1e4c037781f3c4cdc.png")
             embed.add_field(name="Before", value=f"{before.display_name}", inline=False)
             embed.add_field(name="After", value=f"{after.display_name}", inline=False)
+            await self.logs_channel.send(f"{after.mention}")
             await self.logs_channel.send(embed=embed)
 
         elif before.roles != after.roles:
@@ -70,6 +74,7 @@ class Log(Cog):
             for name, value, inline in fields:
                 embed.add_field(name=name, value=value, inline=inline)
 
+            await self.logs_channel.send(f"{after.mention}")
             await self.logs_channel.send(embed=embed)
             
     @Cog.listener()
@@ -89,6 +94,7 @@ class Log(Cog):
                 for name, value, inline in fields:
                     embed.add_field(name=name, value=value, inline=inline)
 
+                await self.logs_channel.send(f"{after.mention}")
                 await self.logs_channel.send(embed=embed)
 
     @Cog.listener()
@@ -107,6 +113,7 @@ class Log(Cog):
                 for name, value, inline in fields:
                     embed.add_field(name=name, value=value, inline=inline)
 
+                await self.logs_channel.send(f"{message.author.mention}")
                 await self.logs_channel.send(embed=embed)
             else:
                 pass

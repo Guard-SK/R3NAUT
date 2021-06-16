@@ -212,7 +212,5 @@ class Bot(BotBase):
                     await message.channel.send("Message relayed to moderators.")
             else:  
                 await self.process_commands(message)
- 
-
 
 bot = Bot()
