@@ -1,6 +1,7 @@
 from typing import Optional
 from datetime import datetime
 from datetime import timedelta
+from re import search
 from asyncio import sleep
 
 
@@ -20,7 +21,7 @@ class Mod(Cog):
         self.bot = bot
 
         self.url_regex = r"(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'\".,<>?«»“”‘’]))"
-        self.no_links = (817805249552187443, 688498139459879115, 736932762615021660, 736934235461517403, 737693038029307975, 707691743986057287)
+        self.no_links = (817805249552187443, 688498139459879115, 736932762615021660, 736934235461517403, 737693038029307975, 707691743986057287) 
             
     async def kick_members(self, message, targets, reason):
         for target in targets:
@@ -114,14 +115,19 @@ class Mod(Cog):
         else:
             await ctx.send("The limit provided is not within acceptable bounds.")
 
-    async def mute_members(self, message, targets, hours, reason):
+
+    # def days_hours_minutes(td):
+    #     return td.days, td.seconds//3600, (td.seconds//60)%60
+
+    async def mute_members(self, message, targets, seconds, reason):
         unmutes = []
+        minutes = seconds*60
 
         for target in targets:
             if not self.mute_role in target.roles:
                 if message.guild.me.top_role.position > target.top_role.position:
                     role_ids = ",".join([str(r.id) for r in target.roles])
-                    end_time = datetime.utcnow() + timedelta(minutes=hours) if hours else None
+                    end_time = datetime.utcnow() + timedelta(minutes) if minutes else None
 
                     db.execute("INSERT INTO mutes VALUES (?, ?, ?)",
                                target.id, role_ids, getattr(end_time, "isoformat", lambda: None)())
@@ -136,7 +142,7 @@ class Mod(Cog):
 
                     fields = [("Member", target.display_name, False),
                               ("Actioned by", message.author.display_name, False),
-                              ("Duration", f"{hours:,} hour(s)" if hours else "Indefinite", False),
+                              ("Duration", f"{minutes:,} minute(s)" if minutes else "Indefinite", False),
                               ("Reason", reason, False)]
 
                     for name, value, inline in fields:
@@ -144,7 +150,7 @@ class Mod(Cog):
 
                     await self.logs_channel.send(embed=embed)
 
-                    if hours:
+                    if minutes:
                         unmutes.append(target)
 
         return unmutes
@@ -152,17 +158,18 @@ class Mod(Cog):
     @command(name="mute")
     @bot_has_permissions(manage_roles=True)
     @has_permissions(manage_roles=True, manage_guild=True)
-    async def mute_command(self, ctx, targets: Greedy[Member], hours: Optional[int], *,
+    async def mute_command(self, ctx, targets: Greedy[Member], minutes: Optional[int], *,
                            reason: Optional[str] = "No reason provided."):
         if not len(targets):
             await ctx.send("One or more required arguments are missing.")
 
         else:
-            unmutes = await self.mute_members(ctx.message, targets, hours, reason)
+            unmutes = await self.mute_members(ctx.message, targets, minutes, reason)
             await ctx.send("Action complete.")
 
             if len(unmutes):
-                await sleep(hours)
+                # minutes = minutes * 60
+                await sleep(minutes)
                 await self.unmute_members(ctx.guild, targets)
 
     @mute_command.error
@@ -229,10 +236,31 @@ class Mod(Cog):
         embed=discord.Embed(title="Profanity deleted", description="Word was deleted from the list", color=0xc91313)
         await ctx.send(embed=embed)
 
+    @Cog.listener()
+    async def on_message(self, message):
+        def _check(m):
+            return (m.author == message.author
+                    and len(m.mentions)
+                    and (datetime.utcnow()-m.created_at).seconds < 60)
 
+        if not message.author.bot:
+            if len(list(filter(lambda m: _check(m), self.bot.cached_messages))) >= 3:
+                await message.channel.send("Don't spam mentions!", delete_after=10)
+                unmutes = await self.mute_members(message, [message.author], 5, reason="Mention spam")
+                print("Mention spam")
 
+                if len(unmutes):
+                    await sleep(5)
+                    await self.unmute_members(message.guild, [message.author])
 
+            elif profanity.contains_profanity(message.content):
+                await message.delete()
+                await message.channel.send("You can't use that word here.", delete_after=10)
 
+            elif message.channel.id in self.no_links and search(self.url_regex, message.content):
+                await message.delete()
+                await message.channel.send("You can't send links in this channel.", delete_after=10)
+    
     @Cog.listener()
     async def on_ready(self):
         if not self.bot.ready:

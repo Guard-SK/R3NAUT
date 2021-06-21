@@ -46,9 +46,9 @@ class Misc(Cog):
 		# 		self.bot.banlist.remove(target.id)
 		# 	await ctx.send("Done.")
 
-	@command(name="ping")
-	async def ping(self, ctx):
-		await ctx.send(f"Pong! Latency is: {self.bot.latency*1000:,.0f} ms.")
+	# @command(name="ping")
+	# async def ping(self, ctx):
+	# 	await ctx.send(f"Pong! Latency is: {self.bot.latency*1000:,.0f} ms.")
 
 	@Cog.listener()
 	async def on_ready(self):

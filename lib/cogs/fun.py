@@ -103,9 +103,11 @@ class Fun(Cog):
         await ctx.send(f"<:Jebaited:821339691760222208>fuq you I wont do that<:pepeLaught:812263170911240214>. Go to horny jail <a:yourmom:808076848188751874> {ctx.author.mention}.")
 
     @command(name="dm", aliases=["direct message", "send"])
+    @cooldown(1, 60, BucketType.user)
     async def send_dm(self, ctx, member: discord.Member, *, content):
         channel = await member.create_dm()
-        await channel.send(content)
+        await channel.send(f"{content} \n \n Message sent by: {ctx.author.mention}")
+        await ctx.send("Message was sent")
 
     @Cog.listener()
     async def on_ready(self):

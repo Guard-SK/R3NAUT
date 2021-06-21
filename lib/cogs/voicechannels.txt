@@ -1,0 +1,42 @@
+import discord
+from discord.ext.commands import Cog
+from discord.ext.commands import command
+
+class VoiceCH(Cog):
+    def __init__(self, bot):
+        self.bot = bot
+
+
+    @Cog.listener()
+    async def on_voice_state_update(self, member, before, after):
+        if member.bot:
+            return
+
+        if not before.channel:
+            print(f'{member.name} joined {after.channel.name}')
+
+        if before.channel and not after.channel:
+            print("User left channel")
+
+        if before.channel and after.channel:
+            if before.channel.id != after.channel.id:
+                print("user switched channel")
+
+            else:
+                print("something else happend")
+                if member.voice.self_stream:
+                    print("User started streaming")
+                elif member.voice.self_mute:
+                    print("User muted")
+                elif member.voice.self_deafen:
+                    print("User deaefened")
+                else:
+                    return
+
+    @Cog.listener()
+    async def on_ready(self):
+        if not self.bot.ready:
+            self.bot.cogs_ready.ready_up("temporary voice channels")        
+
+def setup(bot):
+    bot.add_cog(VoiceCH(bot))

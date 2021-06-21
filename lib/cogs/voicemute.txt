@@ -1,0 +1,33 @@
+from discord.ext.commands import Cog
+from discord.ext.commands import command
+from discord import Member, Embed
+import discord
+import asyncio
+from discord.ext.commands.core import bot_has_permissions, has_permissions
+
+class VoiceMute(Cog):
+    def __init__(self, bot):
+        self.bot = bot
+
+    @command(name="vm", aliases=["voicemute, voice mute"])
+    async def voice_mute(self, ctx, target, author):
+        for target in author.voice_channel:
+            if target.voice:
+                if author.guild_permissions.mute_members: #delete after done
+                    if not target.bot:
+                        await target.edit(mute=True)
+
+                    else:
+                        ctx.send("Member is bot. Muting bots is not allowed.")
+                else:
+                    ctx.send("You don't have permission to do that.")
+            else:
+                ctx.send("Member is not in the voice channel.")
+
+    @Cog.listener()
+    async def on_ready(self):
+        if not self.bot.ready:
+            self.bot.cogs_ready.ready_up("voicemute")
+        
+def setup(bot):
+    bot.add_cog(VoiceMute(bot))

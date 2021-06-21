@@ -20,6 +20,8 @@ from ..db import db
 OWNER_IDS = [544573811899629568]
 COGS = [path[:-3] for path in os.listdir('./lib/cogs') if path[-3:] == '.py']
 IGNORE_EXCEPTIONS = (CommandNotFound, BadArgument)
+AList = [544573811899629568, 431116940568952842, 733271649461338143, 
+         451449793550483456, 657888239553871884, 526345830303662092]
 
 
 def get_prefix(bot, message):
@@ -192,6 +194,9 @@ class Bot(BotBase):
 
         else: 
             print("R3NAUT reconnected")
+
+# AList = [544573811899629568, 431116940568952842, 733271649461338143, 
+#          451449793550483456, 657888239553871884, 526345830303662092]
 
     async def on_message(self, message):
         if not message.author.bot:
