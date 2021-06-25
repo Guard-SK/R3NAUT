@@ -1,6 +1,7 @@
 # R3NAUT
 
 [![Contributors][contributors-shield]][contributors-url]
+[![Last commit][last-commit-shield]][last-commit-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
@@ -16,3 +17,7 @@ Server R3NAUT is on: https://discord.gg/n5b6V2DuAc
 [issues-url]: https://github.com/Guard-SK/R3NAUT/issues
 [license-shield]: https://img.shields.io/github/license/Guard-SK/R3NAUT
 [license-url]: https://github.com/Guard-SK/R3NAUT/blob/main/LICENSE.txt
+[last-commit-shield]: https://img.shields.io/github/last-commit/Guard-SK/R3NAUT
+[last-commit-url]: https://github.com/Guard-SK/R3NAUT/graphs/commit-activity
+[stars-shield]: https://img.shields.io/github/stars/Guard-SK/R3NAUT?style=social
+[stars-url]: https://github.com/othneildrew/Best-README-Template/stargazers
