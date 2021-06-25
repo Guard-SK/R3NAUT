@@ -23,6 +23,8 @@ So... there is a lot to talk about ngl. This project gotten pretty big and has s
 ### Public commands
 Although this bot is designed to be moderation, there is something to talk about in the public section of the bot. Here is the list of the public commands with description:
 
+#### Prefix = 3
+
 | First Header  | Second Header |
 | ------------- | ------------- |
 | hi\|hello\|sup  | greetings  |
