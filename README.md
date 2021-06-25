@@ -42,6 +42,8 @@ Although this bot is designed to be moderation, there is something to talk about
 So as we said, this is a moderation bot, and moderation bots are for moderation. So this bot has something called admin commands. Here is the list of the devices:
 
 | Name\|Aliases  | Command description |
+| ------------- | ------------- |
+| Working on it | Working on it |
 
 
 
