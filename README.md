@@ -25,7 +25,7 @@ Although this bot is designed to be moderation, there is something to talk about
 
 #### Prefix = 3
 
-| First Header  | Second Header |
+| Name\|Aliases  | Command description |
 | ------------- | ------------- |
 | hi\|hello\|sup  | greetings  |
 | fact \|animal\|  | fact about dog, cat, panda, fox, bord or koala  |
@@ -37,6 +37,12 @@ Although this bot is designed to be moderation, there is something to talk about
 | userinfo|ui \|member\|  | gives you info about the user you mentioned  |
 | ping  | pong  |
 | botinfo  | info about R3NAUT  |
+
+### Admin/moderation commands
+So as we said, this is a moderation bot, and moderation bots are for moderation. So this bot has something called admin commands. Here is the list of the devices:
+
+| Name\|Aliases  | Command description |
+
 
 
 <!-- SHIELD LINKS & IMAGES -->
