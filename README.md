@@ -88,10 +88,18 @@ The bot's database is made in SQL
 The bot is hosted on https://hostsapling.net/
 
 ### Links
+<p>
 Carberra - https://www.youtube.com/channel/UC13cYu7lec-oOcqQf5L-brg
+</p>
+<p>
 Carberra moderation tutorial - https://www.youtube.com/watch?v=F1HbEOp-jdg&list=PLYeOw6sTSy6ZGyygcbta7GcpI8a5-Cooc&ab_channel=CarberraTutorials
+</p>
+<p>
 README template - https://github.com/othneildrew/Best-README-Template
+</p>
+<p>
 My discord server - https://discord.gg/3u8aMBzNBJ
+</p>
 
 <!-- SHIELD LINKS & IMAGES -->
 [issues-shield]: https://img.shields.io/github/issues/Guard-SK/R3NAUT
