@@ -71,9 +71,13 @@ So as we said, this is a moderation bot, and moderation bots are for moderation.
 ### Other moderation features
 We are done with commands, but there is some other features that the bot can do. First of we can start with
 #### Logging
-This is a great feature that helps A-team to catch up and be alerted about what happened on the server. Here you have a gif, so you can have idea how does it looks like:
+This is a great feature that helps A-team to catch up and be alerted about what happened on the server. Here you have a image, so you can have idea how does it looks like:
 
-
+<p align="center">
+  <a href="https://github.com/Guard-SK/R3NAUT">
+    <img src="README-images/R3NAUT.png" alt="R3NAUT profile picture">
+  </a>
+</p>
 
 *If you want to see full code, go to lib/cogs/log.py*
 #### And last Auto-moderation
