@@ -38,6 +38,7 @@ So... there is a lot to talk about ngl. This project gotten pretty big and has s
 Although this bot is designed to be moderation, there is something to talk about in the public section of the bot. Here is the list of the public commands with description:
 
 #### Prefix = 3
+#### 3help
 
 | Name\|Aliases  | Command description |
 | ------------- | ------------- |
@@ -53,7 +54,9 @@ Although this bot is designed to be moderation, there is something to talk about
 | botinfo  | info about R3NAUT  |
 
 ### Admin/moderation commands
-So as we said, this is a moderation bot, and moderation bots are for moderation. So this bot has something called admin commands. Here is the list of the devices:
+So as we said, this is a moderation bot, and moderation bots are for moderation. So this bot has something called admin commands. Here is the list of the commands:
+
+#### 3ahelp
 
 | Name\|Aliases  | Command description |
 | ------------- | ------------- |
