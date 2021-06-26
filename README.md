@@ -29,7 +29,7 @@
 Hi! My name is Guard, and this is my bot. I built it, because I wanted to learn python and the best (and fun) way that showed up to me was discord.py. 
 
 ### About the past of the bot
-This bot is built by tutorial from Carbretta (link at the end of README), but edited to function on my server. I'm trying to get away from Carbretta's tutorials, so some of the features are different, but the base of the code is the same as Carbretta. Really recommend checking him out if you want to start with discorrd.py or learn more about discord moderation bot coding.
+This bot is built by tutorial from Carberra (link at the end of README), but edited to function on my server. I'm trying to get away from Carberra's tutorials, so some of the features are different, but the base of the code is the same as Carberra. Really recommend checking him out if you want to start with discorrd.py or learn more about discord moderation bot coding.
 
 ## What does he bring today?
 So... there is a lot to talk about ngl. This project gotten pretty big and has some goooood features I'm proud of. So we shall start with:
@@ -65,6 +65,33 @@ So as we said, this is a moderation bot, and moderation bots are for moderation.
 | kick (member) (reason) | kick user you mentioned. *Permission: Moderator and above* |
 | ban (member) (reason) | bans member you mentioned. *Permission: Staff and higher* |
 
+### Other moderation features
+We are done with commands, but there is some other features that the bot can do. First of we can start with
+#### Logging
+This is a great feature that helps A-team to catch up and be alerted about what happened on the server. Here you have a gif, so you can have idea how does it looks like:
+
+
+
+*If you want to see full code, go to lib/cogs/log.py*
+#### And last Auto-moderation
+Yeah there is a auto-moderation feature in this bot. This feature is not completed, but the first basic things are public. This bot can detect if you'r spamming mentions, and mute you for 5 minutes if that's the case.
+
+### Languages and hosting
+
+#### Python
+The bot is fully made in discord.py
+
+#### SQL database
+The bot's database is made in SQL
+
+#### Hosting
+The bot is hosted on https://hostsapling.net/
+
+### Links
+Carberra - https://www.youtube.com/channel/UC13cYu7lec-oOcqQf5L-brg
+Carberra moderation tutorial - https://www.youtube.com/watch?v=F1HbEOp-jdg&list=PLYeOw6sTSy6ZGyygcbta7GcpI8a5-Cooc&ab_channel=CarberraTutorials
+README template - https://github.com/othneildrew/Best-README-Template
+My discord server - https://discord.gg/3u8aMBzNBJ
 
 <!-- SHIELD LINKS & IMAGES -->
 [issues-shield]: https://img.shields.io/github/issues/Guard-SK/R3NAUT
