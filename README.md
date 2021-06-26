@@ -28,7 +28,7 @@ Although this bot is designed to be moderation, there is something to talk about
 | Name\|Aliases  | Command description |
 | ------------- | ------------- |
 | hi\|hello\|sup  | greetings  |
-| fact \|animal\|  | fact about dog, cat, panda, fox, bord or koala  |
+| fact <animal>  | fact about dog, cat, panda, fox, bord or koala  |
 | dice\|roll \|number of dices\|d\|highest number on the dice\|  | rolls dices of your choice  |
 | say\|echo \|content\|  | repeat content of your message  |
 | slap\|hit \|member\| \|reason\|  | slaps someone for some reason  |

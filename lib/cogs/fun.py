@@ -109,6 +109,10 @@ class Fun(Cog):
         await channel.send(f"{content} \n \n Message sent by: {ctx.author.mention}")
         await ctx.send("Message was sent")
 
+    @command(name="banner")
+    async def banner(self, ctx):
+        await ctx.send(f"Banner is: {ctx.author.banner_url}")
+
     @Cog.listener()
     async def on_ready(self):
         if not self.bot.ready:

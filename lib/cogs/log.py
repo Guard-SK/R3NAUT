@@ -49,6 +49,19 @@ class Log(Cog):
             await self.logs_channel.send(f"{after.mention}")
             await self.logs_channel.send(embed=embed)
 
+        if before.banner_url != after.banner_url:
+            embed = Embed(title=f"Member update!",
+                          description=f"{after.name} changed banner. New image is below, old to the right.",
+                          colour=0xffc800,
+                          timestamp=datetime.utcnow())
+
+            embed.set_thumbnail(url=before.banner_url)
+            embed.set_image(url=after.banner_url)
+
+            await self.logs_channel.send(f"{after.mention}")
+            await self.logs_channel.send(embed=embed)
+
+
 
     @Cog.listener()
     async def on_member_update(self, before, after):
