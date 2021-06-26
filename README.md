@@ -11,6 +11,25 @@ Discord moderation bot under development.
 Single server bot. Making bot public is not planned. 
 Server R3NAUT is on: https://discord.gg/n5b6V2DuAc
 
+<p align="center">
+  <a href="https://github.com/othneildrew/Best-README-Template">
+    <img src="images/R3NAUT.png" alt="R3NAUT profile picture" width="100" height="100">
+  </a>
+
+  <h3 align="center">An awesome Discord moderatiob bot!</h3>
+
+  <p align="center">
+    Single server moderation/fun bot
+    <br />
+    <a href="https://github.com/othneildrew/Best-README-Template"><strong>Join the server the bot is in »</strong></a>
+    <br />
+    <br />
+    <a href="https://github.com/Guard-SK/R3NAUT/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/Guard-SK/R3NAUT/issues">Request Feature</a>
+  </p>
+</p>
+
 ## Hello!
 Hi! My name is Guard, and this is my bot. I built it, because I wanted to learn python and the best (and fun) way that showed up to me was discord.py. 
 
