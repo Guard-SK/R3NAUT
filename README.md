@@ -116,6 +116,6 @@ My discord server - https://discord.gg/3u8aMBzNBJ
 [last-commit-shield]: https://img.shields.io/github/last-commit/Guard-SK/R3NAUT
 [last-commit-url]: https://github.com/Guard-SK/R3NAUT/graphs/commit-activity
 [stars-shield]: https://img.shields.io/github/stars/Guard-SK/R3NAUT?style=social
-[stars-url]: https://github.com/othneildrew/Best-README-Template/stargazers
+[stars-url]: https://github.com/Guard-SK/R3NAUT/stargazers
 [contributors-shield]: https://img.shields.io/github/contributors/Guard-SK/R3NAUT
 [contributors-url]: https://github.com/Guard-SK/R3NAUT/graphs/contributors
