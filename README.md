@@ -12,7 +12,7 @@ Single server bot. Making bot public is not planned.
 Server R3NAUT is on: https://discord.gg/n5b6V2DuAc
 
 <p align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
+  <a href="https://github.com/Guard-SK/R3NAUT">
     <img src="images/R3NAUT.png" alt="R3NAUT profile picture" width="100" height="100">
   </a>
 
