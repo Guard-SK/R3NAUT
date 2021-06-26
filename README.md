@@ -16,7 +16,7 @@
   <p align="center">
     Single server moderation/fun bot
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template"><strong>Join the server the bot is in »</strong></a>
+    <a href="https://discord.gg/3u8aMBzNBJ"><strong>Join the server the bot is in »</strong></a>
     <br />
     <br />
     <a href="https://github.com/Guard-SK/R3NAUT/issues">Report Bug</a>
