@@ -28,13 +28,13 @@ Although this bot is designed to be moderation, there is something to talk about
 | Name\|Aliases  | Command description |
 | ------------- | ------------- |
 | hi\|hello\|sup  | greetings  |
-| fact <animal>  | fact about dog, cat, panda, fox, bord or koala  |
-| dice\|roll \|number of dices\|d\|highest number on the dice\|  | rolls dices of your choice  |
-| say\|echo \|content\|  | repeat content of your message  |
-| slap\|hit \|member\| \|reason\|  | slaps someone for some reason  |
-| dm\|direct message\|send \|member\| \|content\|  | sends a dm to someone  |
+| fact (animal)  | fact about dog, cat, panda, fox, bord or koala  |
+| dice\|roll (number of dices)d(highest number on the dice)  | rolls dices of your choice  |
+| say\|echo (content)  | repeat content of your message  |
+| slap\|hit (member) (reason)  | slaps someone for some reason  |
+| dm\|direct message\|send (member) (content)  | sends a dm to someone  |
 | serverinfo\|si\|guildinfo\|gi | info about the server |
-| userinfo|ui \|member\|  | gives you info about the user you mentioned  |
+| userinfo|ui (member)  | gives you info about the user you mentioned  |
 | ping  | pong  |
 | botinfo  | info about R3NAUT  |
 
@@ -43,8 +43,13 @@ So as we said, this is a moderation bot, and moderation bots are for moderation.
 
 | Name\|Aliases  | Command description |
 | ------------- | ------------- |
-| Working on it | Working on it |
-
+| addprofanity\|addswears\|addcurses (words) | add forbidden words. *Permissions: Admin and higher* |
+| delprofanity\|delswears\|delcurses (words) | delete forbidden words. *Permissions: Admin and higher* |
+| mute (member) (time in minutes(optional)) | deletes all roles from mentioned user and adds a mute role. If you typed time as well, bot will delete the roles and add the old once back. *Permissions: Moderator and higher* |
+| unmute (member) | deletes muted role and adds old roles back. *Permissions: Moderator and higher* |
+| clear|purge|nuke (number) (member(s)(optional)) | clears number of messages you typed. If you mentioned user, the bot will clear all messages within the number you typed that are written by user(s) you mentioned. *Permissions: Moderator and higher* |
+| kick (member) (reason) | kick user you mentioned. *Permission: Moderator and above* |
+| ban (member) (reason) | bans member you mentioned. *Permission: Staff and higher* |
 
 
 <!-- SHIELD LINKS & IMAGES -->
