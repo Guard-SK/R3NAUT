@@ -169,7 +169,7 @@ class Bot(BotBase):
             self.announcements = self.get_channel(717812987364376640)
             self.scheduler.add_job(self.print_message, CronTrigger(second=0, timezone='Europe/Bratislava'))
             self.scheduler.start()
-            await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="https://github.com/Guard-SK/R3NAUT"))
+            # await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="https://github.com/Guard-SK/R3NAUT"))
 
             self.update_db()
             
@@ -191,6 +191,9 @@ class Bot(BotBase):
             await self.stdout.send("Online!")
             self.ready = True
             print("R3NAUT ready")
+
+            meta = self.get_cog("Meta")
+            await meta.set()
 
         else: 
             print("R3NAUT reconnected")
