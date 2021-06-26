@@ -75,7 +75,7 @@ This is a great feature that helps A-team to catch up and be alerted about what 
 
 <p align="center">
   <a href="https://github.com/Guard-SK/R3NAUT">
-    <img src="README-images/R3NAUT.png" alt="R3NAUT profile picture">
+    <img src="README-images/log.PNG" alt="Log messages example">
   </a>
 </p>
 
