@@ -93,45 +93,43 @@ class Log(Cog):
     @Cog.listener()
     async def on_message_edit(self, before, after):
         if not after.author.bot:
-            if before.content != after.content:
-                embed = Embed(title="Message edit",
-							  description=f"Edit by {after.author.display_name}.",
-							  colour=0xff6f00,
-							  timestamp=datetime.utcnow())
+            if after.author == self.bot.user:
+                if before.content != after.content:
+                    embed = Embed(title="Message edit",
+                                description=f"Edit by {after.author.display_name}.",
+                                colour=0xff6f00,
+                                timestamp=datetime.utcnow())
 
-                fields = [("Before", before.content, False),
-						  ("After", after.content, False)]
+                    fields = [("Before", before.content, False),
+                            ("After", after.content, False)]
 
-                embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/629382706299666432/837700710539591740/6e35ef7687065eb1e4c037781f3c4cdc.png")
+                    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/629382706299666432/837700710539591740/6e35ef7687065eb1e4c037781f3c4cdc.png")
 
-                for name, value, inline in fields:
-                    embed.add_field(name=name, value=value, inline=inline)
+                    for name, value, inline in fields:
+                        embed.add_field(name=name, value=value, inline=inline)
 
-                await self.logs_channel.send(f"{after.mention}")
-                await self.logs_channel.send(embed=embed)
+                    await self.logs_channel.send(f"{after.author.mention}")
+                    await self.logs_channel.send(embed=embed)
 
     @Cog.listener()
     async def on_message_delete(self, message):
-        if message.author.id == BotID:
-            if message.author.bot:
-                embed = Embed(title="Message deletion",
-                            description=f"Deleted by {message.author.display_name} in {message.channel}.",
-                            colour=0xff6f00,
-                            timestamp=datetime.utcnow())
+        if not message.author.id == BotID:
+            if message.author == self.bot.user:
+                if not message.author.bot:
+                    embed = Embed(title="Message deletion",
+                                description=f"Deleted by {message.author.display_name} in {message.channel}.",
+                                colour=0xff6f00,
+                                timestamp=datetime.utcnow())
 
-                fields = [("Content", message.content, False)]
+                    fields = [("Content", message.content, False)]
 
-                embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/629382706299666432/837723544863244338/unnamed_3.png")
+                    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/629382706299666432/837723544863244338/unnamed_3.png")
 
-                for name, value, inline in fields:
-                    embed.add_field(name=name, value=value, inline=inline)
+                    for name, value, inline in fields:
+                        embed.add_field(name=name, value=value, inline=inline)
 
-                await self.logs_channel.send(f"{message.author.mention}")
-                await self.logs_channel.send(embed=embed)
-            else:
-                pass
-        else:
-            pass
+                    await self.logs_channel.send(f"{message.author.mention}")
+                    await self.logs_channel.send(embed=embed)
 
 def setup(bot):
     bot.add_cog(Log(bot))
