@@ -22,7 +22,7 @@ class Mod(Cog):
         self.bot = bot
 
         self.url_regex = r"(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'\".,<>?«»“”‘’]))"
-        self.no_links = (817805249552187443, 688498139459879115, 736932762615021660, 736934235461517403, 737693038029307975, 707691743986057287)
+        self.no_links = (817805249552187443, 688498139459879115, 736932762615021660, 736934235461517403, 737693038029307975, 707691743986057287) 
             
     async def kick_members(self, ctx, targets, reason):
         if not len(targets):
@@ -41,8 +41,9 @@ class Mod(Cog):
                     embed.add_field(name="Member", value=f"{target.name} a.k.a. {target.display_name}", inline=False),
                     embed.add_field(name="Actioned by", value=ctx.author.display_name, inline=False),
                     embed.add_field(name="Reason", value=reason, inline=False)
+                    embed.set_footer(text=f"ID: {target.id}")
                     await self.logs_channel.send(embed=embed)
-
+    
                 else:
                     await ctx.send(f"Somehow {target.display_name} could not be kicked.")
     
@@ -81,6 +82,7 @@ class Mod(Cog):
                     embed.add_field(name="Member", value=f"{target.name} a.k.a. {target.display_name}", inline=False),
                     embed.add_field(name="Actioned by", value=ctx.author.display_name, inline=False),
                     embed.add_field(name="Reason", value=reason, inline=False)
+                    embed.set_footer(text=f"ID: {target.id}")
                     await self.logs_channel.send(embed=embed)
 
                 else:
@@ -124,14 +126,14 @@ class Mod(Cog):
 
 ##############################################################################################################################################
 
-    async def mute_members(self, message, targets, hours, reason):
+    async def mute_members(self, message, targets, minutes, reason):
         unmutes = []
 
         for target in targets:
             if not self.mute_role in target.roles:
                 if message.guild.me.top_role.position > target.top_role.position:
                     role_ids = ",".join([str(r.id) for r in target.roles])
-                    end_time = datetime.utcnow() + timedelta(seconds=hours) if hours else None
+                    end_time = datetime.utcnow() + timedelta(minutes=minutes) if minutes else None
 
                     db.execute("INSERT INTO mutes VALUES (?, ?, ?)",
                             target.id, role_ids, getattr(end_time, "isoformat", lambda: None)())
@@ -146,15 +148,16 @@ class Mod(Cog):
 
                     fields = [("Member", target.display_name, False),
                             ("Actioned by", message.author.display_name, False),
-                            ("Duration", f"{hours:,} hour(s)" if hours else "Indefinite", False),
+                            ("Duration", f"{minutes:,} minutes(s)" if minutes else "Indefinite", False),
                             ("Reason", reason, False)]
 
                     for name, value, inline in fields:
                         embed.add_field(name=name, value=value, inline=inline)
+                        embed.set_footer(text=f"ID: {target.id}")
 
                     await self.logs_channel.send(embed=embed)
 
-                    if hours:
+                    if minutes:
                         unmutes.append(target)
 
         return unmutes
@@ -162,17 +165,17 @@ class Mod(Cog):
     @command(name="mute")
     @bot_has_permissions(manage_roles=True)
     @has_permissions(manage_messages=True)
-    async def mute_command(self, ctx, targets: Greedy[Member], hours: Optional[int], *,
+    async def mute_command(self, ctx, targets: Greedy[Member], minutes: Optional[int], *,
                            reason: Optional[str] = "No reason provided."):
         if not len(targets):
             await ctx.send("One or more required arguments are missing.")
 
         else:
-            unmutes = await self.mute_members(ctx.message, targets, hours, reason)
+            unmutes = await self.mute_members(ctx.message, targets, minutes, reason)
             await ctx.send("Action complete.")
 
             if len(unmutes):
-                await sleep(hours)
+                await sleep(minutes*60)
                 await self.unmute_members(ctx.guild, targets)
 
     @mute_command.error
@@ -201,6 +204,7 @@ class Mod(Cog):
 
                 for name, value, inline in fields:
                     embed.add_field(name=name, value=value, inline=inline)
+                    embed.set_footer(text=f"ID: {target.id}")
 
                 await self.logs_channel.send(embed=embed)
 
@@ -248,7 +252,7 @@ class Mod(Cog):
                     await message.delete()
                     await message.channel.send("You can't use that word here!", delete_after=10)
 
-                elif message.channel.id not in self.links_allowed and search(self.url_regex, message.content):
+                elif message.channel.id in self.no_links and search(self.url_regex, message.content):
                     await message.delete()
                     await message.channel.send("You can't send links in this channel.", delete_after=10)
 

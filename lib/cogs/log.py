@@ -24,17 +24,19 @@ class Log(Cog):
             embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/629382706299666432/837700710539591740/6e35ef7687065eb1e4c037781f3c4cdc.png")
             embed.add_field(name="Before", value=f"{before.name}", inline=False)
             embed.add_field(name="After", value=f"{after.name}", inline=False)
+            embed.set_footer(text=f"ID: {after.id}")
             await self.logs_channel.send(f"{after.mention}")
             await self.logs_channel.send(embed=embed)
 
 
         if before.avatar_url != after.avatar_url:
             embed = Embed(title=f"Member update!",
-						  description=f"{after.name} changed avatar. New image is below, old to the right.",
-						  colour=0xffc800,
-						  timestamp=datetime.utcnow())
+                          description=f"{after.name} changed avatar. New image is below, old to the right.",
+                          colour=0xffc800,
+                          timestamp=datetime.utcnow())
 
             embed.set_thumbnail(url=before.avatar_url)
+            embed.set_footer(text=f"ID: {after.id}")
             embed.set_image(url=after.avatar_url)
 
             await self.logs_channel.send(f"{after.mention}")
@@ -49,20 +51,6 @@ class Log(Cog):
             await self.logs_channel.send(f"{after.mention}")
             await self.logs_channel.send(embed=embed)
 
-        if before.banner_url != after.banner_url:
-            embed = Embed(title=f"Member update!",
-                          description=f"{after.name} changed banner. New image is below, old to the right.",
-                          colour=0xffc800,
-                          timestamp=datetime.utcnow())
-
-            embed.set_thumbnail(url=before.banner_url)
-            embed.set_image(url=after.banner_url)
-
-            await self.logs_channel.send(f"{after.mention}")
-            await self.logs_channel.send(embed=embed)
-
-
-
     @Cog.listener()
     async def on_member_update(self, before, after):
         if before.display_name != after.display_name:
@@ -71,18 +59,20 @@ class Log(Cog):
             embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/629382706299666432/837700710539591740/6e35ef7687065eb1e4c037781f3c4cdc.png")
             embed.add_field(name="Before", value=f"{before.display_name}", inline=False)
             embed.add_field(name="After", value=f"{after.display_name}", inline=False)
+            embed.set_footer(text=f"ID: {after.id}")
             await self.logs_channel.send(f"{after.mention}")
             await self.logs_channel.send(embed=embed)
 
         elif before.roles != after.roles:
             embed = Embed(title="Role updates",
-						  colour=0xff6f00,
-						  timestamp=datetime.utcnow())
+                          colour=0xff6f00,
+                          timestamp=datetime.utcnow())
             
             embed.set_author(name=f"{before.name}", url=before.avatar_url)
+            embed.set_footer(text=f"ID: {after.id}")
 
             fields = [("Before", ", ".join([r.mention for r in before.roles]), False),
-					  ("After", ", ".join([r.mention for r in after.roles]), False)]
+                      ("After", ", ".join([r.mention for r in after.roles]), False)]
 
             for name, value, inline in fields:
                 embed.add_field(name=name, value=value, inline=inline)
@@ -92,43 +82,46 @@ class Log(Cog):
             
     @Cog.listener()
     async def on_message_edit(self, before, after):
-        if not after.author.bot:
-            if after.author == self.bot.user:
-                if before.content != after.content:
-                    embed = Embed(title="Message edit",
-                                description=f"Edit by {after.author.display_name}.",
+        if not after.author.id == BotID:
+            if not after.author == self.bot.user:
+                if not after.author.bot:
+                    embed = Embed(title=f"Message edit by {after.author.display_name} in {after.channel}",
+                                description=f"**Edit:** {before.content} ---> {after.content}",
                                 colour=0xff6f00,
                                 timestamp=datetime.utcnow())
 
-                    fields = [("Before", before.content, False),
-                            ("After", after.content, False)]
+                    embed.set_footer(text=f"ID: {after.author.id}")
+                    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/629382706299666432/888434526739640382/6e35ef7687065eb1e4c037781f3c4cdc_1.png")
 
-                    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/629382706299666432/837700710539591740/6e35ef7687065eb1e4c037781f3c4cdc.png")
-
-                    for name, value, inline in fields:
-                        embed.add_field(name=name, value=value, inline=inline)
-
-                    await self.logs_channel.send(f"{after.author.mention}")
+                    await self.logs_channel.send(f"|{after.author.mention}|<#{after.channel.id}>|")
                     await self.logs_channel.send(embed=embed)
+
+    @Cog.listener()
+    async def on_member_join(self, member):
+        if member.guild.id == 647170092467224646:
+            embed = discord.Embed(title=f"Member join", description=f"{member.mention} alias {member.guild.name}", color=0x0bef1a, timestamp=datetime.utcnow())  
+            embed.set_footer(text=f"ID: {member.id}")
+            
+    @Cog.listener()
+    async def on_member_remove(self, member):
+        if member.guild.id == 647170092467224646:
+            embed = discord.Embed(title=f"Member left", description=f"{member.mention} alias {member.guild.name}", color=0xff0000, timestamp=datetime.utcnow())
+            embed.set_footer(text=f"ID: {member.id}")
 
     @Cog.listener()
     async def on_message_delete(self, message):
         if not message.author.id == BotID:
-            if message.author == self.bot.user:
+            if not message.author == self.bot.user:
                 if not message.author.bot:
-                    embed = Embed(title="Message deletion",
-                                description=f"Deleted by {message.author.display_name} in {message.channel}.",
+                    embed = Embed(title=f"Message deletion by {message.author.display_name} in {message.channel}",
+                                description=f"**Content:** {message.content}",
                                 colour=0xff6f00,
                                 timestamp=datetime.utcnow())
 
-                    fields = [("Content", message.content, False)]
+                    embed.set_footer(text=f"ID: {message.author.id}")
+                    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/629382706299666432/888433648490123324/trash-can-web-32257.png")
 
-                    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/629382706299666432/837723544863244338/unnamed_3.png")
-
-                    for name, value, inline in fields:
-                        embed.add_field(name=name, value=value, inline=inline)
-
-                    await self.logs_channel.send(f"{message.author.mention}")
+                    await self.logs_channel.send(f"|{message.author.mention}|<#{message.channel.id}>|")
                     await self.logs_channel.send(embed=embed)
 
 def setup(bot):
