@@ -246,15 +246,14 @@ class Mod(Cog):
 
     @Cog.listener()
     async def on_message(self, message):
-        if not message.author.bot:
-            if not message.author.guild_permissions.manage_guild:
-                if profanity.contains_profanity(message.content):
-                    await message.delete()
-                    await message.channel.send("You can't use that word here!", delete_after=10)
+        if not message.author.guild_permissions.manage_guild:
+            if profanity.contains_profanity(message.content):
+                await message.delete()
+                await message.channel.send("You can't use that word here!", delete_after=10)
 
-                elif message.channel.id in self.no_links and search(self.url_regex, message.content):
-                    await message.delete()
-                    await message.channel.send("You can't send links in this channel.", delete_after=10)
+            elif message.channel.id in self.no_links and search(self.url_regex, message.content):
+                await message.delete()
+                await message.channel.send("You can't send links in this channel.", delete_after=10)
 
 
     @Cog.listener()
