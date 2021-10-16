@@ -85,8 +85,8 @@ class Log(Cog):
         if not before.author.id == BotID:
             if not before.author == self.bot.user:
                 if not before.author.bot:
-                    embed = Embed(title=f"Message edit by {after.author.display_name} in {after.channel}",
-                                description=f"**Edit:** {before.content} ---> {after.content}",
+                    embed = Embed(title=f"Message **edit** by {after.author.display_name} in {after.channel}",
+                                description=f"<:down:893119176749760562>**old**<:down:893119176749760562>\n{before.content}\n<:down:893119176749760562>**new**<:down:893119176749760562>\n{after.content}",
                                 colour=0xff6f00,
                                 timestamp=datetime.utcnow())
 
@@ -113,9 +113,9 @@ class Log(Cog):
     @Cog.listener()
     async def on_message_delete(self, message):
         if not message.author.id == BotID:
-            if not message.content == "3ahelp" or "3help" or "3say" or "3dm":
+            if not message.content == "3ahelp" or "3help" or "3say" or "3dm" or "ahelp" or "help" or "say" or "dm":
                 if not message.author.bot:
-                    embed = Embed(title=f"Message deletion by {message.author.display_name} in {message.channel}",
+                    embed = Embed(title=f"Message **deletion** by {message.author.display_name} in {message.channel}",
                                 description=f"Content:\n {message.content}",
                                 colour=0xff6f00,
                                 timestamp=datetime.utcnow())

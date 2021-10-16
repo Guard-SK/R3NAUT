@@ -4,12 +4,29 @@ from datetime import datetime
 from discord.ext.commands import Cog
 from discord import Forbidden
 from discord.ext.commands import command
+from discord_slash import cog_ext, SlashContext, SlashCommand
+from discord_slash.utils.manage_commands import create_choice, create_option
 from discord import Embed, Member
 import discord
 
 class Info(Cog):
     def __init__(self, bot):
         self.bot = bot
+
+    @cog_ext.cog_slash(name='botinfo', 
+                       description='Tells you interesting information about R3NAUT.', 
+                       guild_ids=[807971983081472000, 647170092467224646])
+    async def R3NAUT_info(self, ctx: SlashContext):
+        embed=Embed(title="INFO ABOUT R3NAUT", description="This is a info about me", timestamp=datetime.utcnow())
+        embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/629382706299666432/845639956008534046/R3NAUT.png")
+        embed.add_field(name="Born in", value="6/3/2021 14:38:09", inline=False)
+        embed.add_field(name="Created by", value="<@544573811899629568>", inline=False)
+        embed.add_field(name="ID", value="817768019086016543", inline=True)
+        embed.add_field(name="Programed in", value="Visual Studio Code|Python 3.9.2 64-bit", inline=True)
+        embed.add_field(name="Database", value="SQLite", inline=True)
+        embed.add_field(name="Stored in", value="Github = https://github.com/Guard-SK/R3NAUT", inline=False)
+        embed.add_field(name="Hosted", value="localy on Raspberry pi 3B+", inline=True)  
+        await ctx.send(embed=embed) 
 
     @command(name="userinfo", aliases=["ui"])
     async def user_info(self, ctx, target: Optional[Member]):
@@ -73,7 +90,7 @@ class Info(Cog):
         embed.add_field(name="Programed in", value="Visual Studio Code|Python 3.9.2 64-bit", inline=True)
         embed.add_field(name="Database", value="SQLite", inline=True)
         embed.add_field(name="Stored in", value="Github = https://github.com/Guard-SK/R3NAUT", inline=False)
-        embed.add_field(name="Hosted on", value="https://hostsapling.net/", inline=True)  
+        embed.add_field(name="Hosted", value="localy on Raspberry pi 3B+", inline=True)  
         await ctx.send(embed=embed)  
     
     @Cog.listener()

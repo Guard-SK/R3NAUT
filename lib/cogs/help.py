@@ -7,6 +7,9 @@ from discord.ext.commands import Cog
 from discord.ext.commands import command
 from datetime import datetime
 
+from discord_slash import cog_ext, SlashContext, SlashCommand
+from discord_slash.utils.manage_commands import create_choice, create_option
+
 ####	New help command	####
 
 class Help(Cog):
@@ -14,12 +17,29 @@ class Help(Cog):
 		self.bot = bot
 		self.bot.remove_command("help")
 
+	@cog_ext.cog_slash(name='help', 
+					   description='Sends a list of commands for common users', 
+					   guild_ids=[807971983081472000],)
+	async def slash_cmd_help(self, ctx):
+
+		#help embed
+		embed=Embed(title="HELP", description="Welcome to the R3NAUT help dialog! \n Prefix = 3 \n Or use slash commands **/**", color=0x15cb55, timestamp=datetime.utcnow())
+		embed.add_field(name="-----Fun-----", value=f"```hi|hello|sup``` - greetings\n```fact <animal>``` - fact about dog, cat, panda, fox, bord or koala \n ```dice|roll <number of dices>d<highest number on the dice>``` - rolls dices of your choice \n ```say|echo <content>``` - repeat content of your message \n ```slap|hit <member> <reason>``` - slaps someone for some reason \n ```dm|direct message|send <member> <content>``` - sends a dm to someone", inline=False)
+		embed.add_field(name="-----Info-----", value=f" ```serverinfo|si|guildinfo|gi``` - info about the server \n ```userinfo|ui <member>``` - gives you info about the user you mentioned\n```ping``` - pong\n```botinfo``` - info about R3NAUT")
+		embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/629382706299666432/845639956008534046/R3NAUT.png")
+
+		#delete help embed after 60 seconds
+		msg = await ctx.send(embed=embed)
+		await asyncio.sleep(60)
+		await msg.delete()
+
+
 	#help command for normal users
 	@command(name="help")
 	async def cmd_help(self, ctx):
 
 		#help embed
-		embed=Embed(title="HELP", description="Welcome to the R3NAUT help dialog! \n Prefix = 3", color=0x15cb55, timestamp=datetime.utcnow())
+		embed=Embed(title="HELP", description="Welcome to the R3NAUT help dialog! \n Prefix = 3 \n Or use slash commands **/**", color=0x15cb55, timestamp=datetime.utcnow())
 		embed.add_field(name="-----Fun-----", value=f"```hi|hello|sup``` - greetings\n```fact <animal>``` - fact about dog, cat, panda, fox, bord or koala \n ```dice|roll <number of dices>d<highest number on the dice>``` - rolls dices of your choice \n ```say|echo <content>``` - repeat content of your message \n ```slap|hit <member> <reason>``` - slaps someone for some reason \n ```dm|direct message|send <member> <content>``` - sends a dm to someone", inline=False)
 		embed.add_field(name="-----Info-----", value=f" ```serverinfo|si|guildinfo|gi``` - info about the server \n ```userinfo|ui <member>``` - gives you info about the user you mentioned\n```ping``` - pong\n```botinfo``` - info about R3NAUT")
 		embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/629382706299666432/845639956008534046/R3NAUT.png")
@@ -31,6 +51,8 @@ class Help(Cog):
 		msg = await ctx.send(embed=embed)
 		await asyncio.sleep(60)
 		await msg.delete()
+
+
 
 	#a-team help command
 	@command(name="ahelp")

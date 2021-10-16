@@ -1,27 +1,102 @@
 
 from random import choice, randint
+from re import search
 from typing import Optional
 from discord.errors import HTTPException
 from aiohttp import request
-from discord.ext import commands, tasks
 from discord import Member, Embed
 from discord.ext.commands import Cog, BucketType
 from discord.ext.commands import BadArgument
 from discord.ext.commands import command, cooldown
-
+from re import search
+from better_profanity import profanity
+from discord_slash import cog_ext, SlashContext, SlashCommand
+from discord_slash.utils.manage_commands import create_choice, create_option
+from time import time
+from datetime import datetime
 import discord
+
+
+profanity.load_censor_words_from_file("./data/profanity.txt")
 
 class Fun(Cog):
     def __init__(self, bot):
         self.bot = bot
 
+        self.logs_channel = self.bot.get_channel(732624357762793502)
+        self.url_regex = r"(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'\".,<>?«»“”‘’]))"
+
+    @cog_ext.cog_slash(name='botinfo', 
+                    description='Tells you interesting information about R3NAUT.', 
+                    guild_ids=[807971983081472000, 647170092467224646])
+    async def R3NAUT_info(self, ctx: SlashContext):
+        embed=Embed(title="INFO ABOUT R3NAUT", description="This is a info about me", timestamp=datetime.utcnow())
+        embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/629382706299666432/845639956008534046/R3NAUT.png")
+        embed.add_field(name="Born in", value="6/3/2021 14:38:09", inline=False)
+        embed.add_field(name="Created by", value="<@544573811899629568>", inline=False)
+        embed.add_field(name="ID", value="817768019086016543", inline=True)
+        embed.add_field(name="Programed in", value="Visual Studio Code|Python 3.9.2 64-bit", inline=True)
+        embed.add_field(name="Database", value="SQLite", inline=True)
+        embed.add_field(name="Stored in", value="Github = https://github.com/Guard-SK/R3NAUT", inline=False)
+        embed.add_field(name="Hosted", value="localy on Raspberry pi 3B+", inline=True)  
+        await ctx.send(embed=embed) 
+
+    @cog_ext.cog_slash(name='ping', 
+                    description='Tells you DWPS latency and overall response time.', 
+                    guild_ids=[807971983081472000, 647170092467224646])
+    async def ping(self, ctx: SlashContext):
+        start = time()
+        message = await ctx.send(f"Pong! DWSP latency is: {self.bot.latency*1000:,.0f} ms.")
+        end = time()
+
+        await message.edit(content=f"Pong! DWSP latency is: {self.bot.latency*1000:,.0f} ms. Response time: {(end-start)*1000:,.0f} ms.")
+    
+    @cog_ext.cog_slash(name='test', 
+    description='hehehehee', 
+    guild_ids=[807971983081472000], 
+    options=[
+        create_option(
+            name="option", 
+            description="something", 
+            required=True,
+            option_type=3, 
+            choices=[
+                create_choice(
+                    name="Word",
+                    value="word"
+                ),
+                create_choice(
+                    name="Word2",
+                    value="word2"
+                )
+            ]
+        )    
+    ]
+)
+    async def test(self, ctx: SlashContext, option: str):
+        await ctx.send(option)
+
+    @cog_ext.cog_slash(name='hi', 
+                       description='say hello to R3NAUT', 
+                       guild_ids=[807971983081472000, 647170092467224646])
+    async def hi(self, ctx: SlashContext):
+        await ctx.send(f"{choice(('Hello', 'Hi', 'Hey', 'Hiya', 'Sup', 'Ciao', '<:peepohey:806962515152994406>'))} {ctx.author.mention}!")
+
+    @cog_ext.cog_slash(name='hello', 
+                       description='say hello to R3NAUT', 
+                       guild_ids=[807971983081472000, 647170092467224646])
+    async def hello(self, ctx: SlashContext):
+        await ctx.send(f"{choice(('Hello', 'Hi', 'Hey', 'Hiya', 'Sup', 'Ciao', '<:peepohey:806962515152994406>'))} {ctx.author.mention}!")
+
     @command(name="hello", aliases=["hi", "sup"])
+    @cooldown(1, 1, BucketType.user)
     async def say_hello(self, ctx):
         await ctx.send(f"{choice(('Hello', 'Hi', 'Hey', 'Hiya', 'Sup', 'Ciao', '<:peepohey:806962515152994406>'))} {ctx.author.mention}!")
 
-    #@command(name="ahoj", aliases=["čau", "cav", "cau"])
-    #async def povedz_ahoj(self, ctx):
-        #await ctx.send(f"{choice(('<:peepohey:806962515152994406>', 'Ahoj', 'Čau', 'Hej', 'Cav', 'Sup', 'Ciao'))} {ctx.author.mention}!") #'My name is Jeff', 'Hello, my name is R3NAUT, and Im developed by Guard_SK', 'Hello, my name is R3NAUT', 'Whats going on?', 'I wasnt ready for that..'     
+    @command(name="ahoj", aliases=["čau", "cav", "cau"])
+    @cooldown(1, 1, BucketType.user)
+    async def povedz_ahoj(self, ctx):
+        await ctx.send(f"{choice(('<:peepohey:806962515152994406>', 'Ahoj', 'Čau', 'Hej', 'Cav', 'Sup', 'Ciao'))} {ctx.author.mention}!") #'My name is Jeff', 'Hello, my name is R3NAUT, and Im developed by Guard_SK', 'Hello, my name is R3NAUT', 'Whats going on?', 'I wasnt ready for that..'     
 
     @command(name="dice", aliases=["roll"])
     @cooldown(1, 10, BucketType.user)
@@ -54,8 +129,12 @@ class Fun(Cog):
     @command(name="say", aliases=["echo"])
     @cooldown(1, 5, BucketType.user)
     async def echo_message(self, ctx, *, message):
-        await ctx.message.delete()
-        await ctx.send(message)
+        if not profanity.contains_profanity(message):
+            await ctx.message.delete()
+            await ctx.send(message)
+
+        else:
+            await message.channel.send("You can't use that word here!", delete_after=10)
 
     @command(name="fact")
     @cooldown(1, 10, BucketType.user)
@@ -105,13 +184,18 @@ class Fun(Cog):
     @command(name="dm", aliases=["direct message", "send"])
     @cooldown(1, 60, BucketType.user)
     async def send_dm(self, ctx, member: discord.Member, *, content):
-        channel = await member.create_dm()
-        await channel.send(f"{content} \n \n Message sent by: {ctx.author.mention}")
-        await ctx.send("Message was sent")
+        if not search(self.url_regex, content):
+            channel = await member.create_dm()
+            await channel.send(f"{content} \n \n Message sent by: {ctx.author.mention}")
+            await ctx.send("Message was sent")
 
-    @command(name="banner")
-    async def banner(self, ctx):
-        await ctx.send(f"Banner is: {ctx.author.banner_url}")
+        else:
+            await ctx.send("You cannot send links with this command!", delete_after=10)
+            embed=discord.Embed(title="Link in dm", description="Someone send link to with dm command. Look at that!", color=0xff0000)
+            embed.add_field(name="Content:", value=f"{content}", inline=False)
+            await ctx.send(embed=embed)
+
+
 
     @Cog.listener()
     async def on_ready(self):

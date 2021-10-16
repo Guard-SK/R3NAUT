@@ -9,11 +9,10 @@ from discord.errors import HTTPException, Forbidden
 from discord.ext.commands import Bot as BotBase
 from discord.ext.commands import Context
 from discord.ext.commands import (CommandNotFound, BadArgument, MissingRequiredArgument, CommandOnCooldown)
-from discord.ext.commands import when_mentioned_or, command, has_permissions
-from discord.ext import commands
+from discord.ext.commands import when_mentioned_or
 from discord import Intents
-import discord
 from discord.ext.commands.errors import MissingPermissions
+from discord_slash import SlashCommand
 
 from ..db import db
 
@@ -27,38 +26,6 @@ AList = [544573811899629568, 431116940568952842, 733271649461338143,
 def get_prefix(bot, message):
 	prefix = db.field("SELECT Prefix FROM guilds WHERE GuildID = ?", message.guild.id)
 	return when_mentioned_or(prefix)(bot, message)
-
-
-
-# target_channel_id = 694513486880964608
-
-# @tasks.loop(hours=2)
-# async def called_every_hour():
-#     message_channel = bot.get_channel(694513486880964608)
-#     print(f"Got channel {message_channel} for teatime") 
-#     await message_channel.send(f"{choice(('<:pepeLaught:812263170911240214><a:TeaTime:806197564302819359>', '<a:yourmom:808076848188751874><:OMEGALUL:797814371609739275>', '<:pepeLaught:812263170911240214><a:TeaTime:806197564302819359>   <:pepeLaught:812263170911240214><a:TeaTime:806197564302819359>   <:pepeLaught:812263170911240214><a:TeaTime:806197564302819359>', '<a:hackerCD:835166860239568947>'))}")
-
-# @called_every_hour.before_loop
-# async def before():
-#     await bot.wait_until_ready()
-#     print("Finished waiting")
-
-# called_every_hour.start()
-
-# target_channel_id = 778562691810852884 #818107256213471242
-
-# @tasks.loop(hours=2)
-# async def called_every_hour():
-#     message_channel = bot.get_channel(778562691810852884)
-#     print(f"Got channel {message_channel} for teatime")
-#     await message_channel.send(f"{choice(('<:pepeLaught:812263170911240214><a:TeaTime:806197564302819359>', '<a:yourmom:808076848188751874><:OMEGALUL:797814371609739275>', '<:pepeLaught:812263170911240214><a:TeaTime:806197564302819359>   <:pepeLaught:812263170911240214><a:TeaTime:806197564302819359>   <:pepeLaught:812263170911240214><a:TeaTime:806197564302819359>'))}")
-
-# @called_every_hour.before_loop
-# async def before():
-#     await bot.wait_until_ready()
-#     print("Finished waiting")
-
-# called_every_hour.start()
 
 class Ready(object):
     def __init__(self):
@@ -222,3 +189,4 @@ class Bot(BotBase):
                 await self.process_commands(message)
 
 bot = Bot()
+slash = SlashCommand(bot, sync_commands=True)
