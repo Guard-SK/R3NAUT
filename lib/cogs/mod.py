@@ -13,6 +13,8 @@ from discord.ext.commands import has_permissions, bot_has_permissions, CheckFail
 from discord import Forbidden
 from discord import Embed, Member
 
+from lib.bot import OWNER_IDS
+
 from ..db import db
 
 profanity.load_censor_words_from_file("./data/profanity.txt")
@@ -246,14 +248,15 @@ class Mod(Cog):
 
     @Cog.listener()
     async def on_message(self, message):
-        if not message.author.guild_permissions.manage_guild:
-            if profanity.contains_profanity(message.content):
-                await message.delete()
-                await message.channel.send("You can't use that word here!", delete_after=10)
+        if not message.author.bot:
+            if not message.author.id == 544573811899629568 or 431116940568952842:
+                if profanity.contains_profanity(message.content):
+                    await message.delete()
+                    await message.channel.send("You can't use that word here!", delete_after=10)
 
-            elif message.channel.id in self.no_links and search(self.url_regex, message.content):
-                await message.delete()
-                await message.channel.send("You can't send links in this channel.", delete_after=10)
+                elif message.channel.id in self.no_links and search(self.url_regex, message.content):
+                    await message.delete()
+                    await message.channel.send("You can't send links in this channel.", delete_after=10)
 
 
     @Cog.listener()
