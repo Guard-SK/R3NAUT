@@ -38,6 +38,7 @@ So... there is a lot to talk about ngl. This project gotten pretty big and has s
 Although this bot is designed to be moderation, there is something to talk about in the public section of the bot. Here is the list of the public commands with description:
 
 #### Prefix = 3
+#### SLASH COMMANDS AVAILABLE = /
 #### 3help
 
 | Name\|Aliases  | Command description |
@@ -92,7 +93,7 @@ The bot is fully made in discord.py
 The bot's database is made in SQL
 
 #### Hosting
-The bot is hosted on https://hostsapling.net/
+The bot is hosted on my Raspberry Pi 3B+
 
 ### Links
 <p>
